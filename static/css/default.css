@@ -1,3 +1,22 @@
 body {
-    background-color: green;
+    font-family: 'Archivo Narrow';
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #7ced84;
+    color: white;
+    padding: 0 10px;
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+}
+.liner {
+    height: 3px;
+    background-color: #7ced84;
+}
+
+h1 {
+    font-style: italic;
+    margin: 0px;
 }

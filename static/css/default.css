@@ -26,6 +26,10 @@ h1 {
     width: 15px;
 }
 
+.active-state {
+    margin-right: 10px;
+}
+
 .page-header {
     font-style: italic;
     font-size: 1.5em;

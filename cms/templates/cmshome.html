@@ -30,7 +30,11 @@
             
                 {% for competition in competitions %}
             
-                    {{ competition.name }}<br />
+                    <div class="list-item">
+                        <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.sport.icon }}" />
+                        <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.country.flag }}" />
+                        {{ competition.name }} <a class="list-link" href="">Edit</a>
+                    </div>
             
                 {% endfor %}
                 
@@ -42,12 +46,10 @@
             
         </div>
         
-        <div class="cms-button">
-            
+        <div class="cms-link-button">
             <a href="{% url 'new_competition' %}">
                 New Competition
             </a>
-            
         </div>
         
     </section>

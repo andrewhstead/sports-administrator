@@ -2,7 +2,7 @@
 
 {% block title %}
 
-	<title>Login | Content Management System | SportsAdministrator</title>
+	<title>New Competition | Content Management System | SportsAdministrator</title>
 	
 {% endblock %}
 
@@ -11,5 +11,12 @@
     <div class="page-header">
         NEW COMPETITION
     </div>
+    
+    <!-- Form for creating a new competition. -->
+    <form id="default-form" enctype="multipart/form-data" role="form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="cms-button" type="submit">{{ button_text }}</button>
+    </form>
             
 {% endblock %}

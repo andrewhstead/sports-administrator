@@ -49,18 +49,58 @@ h1 {
     border: 2px solid #7ced84;
     border-top: 0;
 }
+.cms-link-button {
+    text-align: center;
+    margin: 5px auto;
+    background-color: #7ced84;
+    width: fit-content;
+    padding: 0 5px;
+    border-radius: 5px;
+    border: 1px solid #38a940;
+}
+.cms-link-button:hover {
+    background-color: #6bdc73;
+}
+.cms-link-button:active {
+    background-color: #49ba51;
+}
+.cms-link-button a {
+    text-decoration: none;
+    color: white;
+}
+.cms-link-button a:hover {
+    text-decoration: underline;
+}
 .cms-button {
     text-align: center;
     margin: 5px auto;
     background-color: #7ced84;
     width: fit-content;
-    padding: 5px;
+    padding: 0 5px;
     border-radius: 5px;
-}
-.cms-button a {
-    text-decoration: none;
+    border: 1px solid #38a940;
     color: white;
+    font-family: 'Archivo Narrow';
+    font-size: 1em;
 }
-.cms-button a:hover {
+.cms-button:hover {
+    background-color: #6bdc73;
     text-decoration: underline;
+}
+.cms-button:active {
+    background-color: #49ba51;
+    outline: none;
+}
+
+.list-link {
+    margin-left: 5px;
+    color: #38a940;
+    text-decoration: none;
+}
+.list-link:hover {
+    text-decoration: underline;
+}
+
+#default-form label {
+    display: block;
 }

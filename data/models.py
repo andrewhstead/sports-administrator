@@ -27,6 +27,7 @@ class Competition(models.Model):
     name = models.CharField(max_length=100)
     sport = models.ForeignKey(Sport, related_name='competitions', on_delete=models.CASCADE)
     country = models.ForeignKey(Country, related_name='competitions', on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
    
     def __str__(self):
         return self.name

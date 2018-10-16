@@ -1,5 +1,6 @@
 from django import forms
 from users.models import User
+from data.models import Competition
 from django.core.exceptions import ValidationError
 
 
@@ -7,3 +8,16 @@ from django.core.exceptions import ValidationError
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+    
+
+# Form to create a new competition.
+class NewCompetitionForm(forms.ModelForm):
+
+    class Meta:
+        model = Competition
+        fields = ['name', 'sport', 'country']
+        labels = {
+            'name': 'Competition Name',
+            'sport': 'Sport',
+            'country': 'Primary Country',
+        }

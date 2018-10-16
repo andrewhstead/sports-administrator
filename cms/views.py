@@ -41,3 +41,8 @@ def login(request):
 
     args.update(csrf(request))
     return render(request, 'login.html', args)
+    
+    
+def new_competition(request):
+    
+    return render(request, "new_competition.html")

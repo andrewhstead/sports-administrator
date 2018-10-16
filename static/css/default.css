@@ -25,3 +25,42 @@ h1 {
     height: 15px;
     width: 15px;
 }
+
+.page-header {
+    font-style: italic;
+    font-size: 1.5em;
+}
+
+#cms-page {
+    margin: 10px;
+}
+.cms-header {
+    margin: 10px 0 0 0;
+    background-color: #7ced84;
+    color: white;
+    font-weight: bold;
+    font-style: italic;
+    padding: 2px 0px 2px 10px;
+    font-size: 1.2em;
+    border-radius: 10px 10px 0 0;
+}
+.cms-details {
+    padding: 5px;
+    border: 2px solid #7ced84;
+    border-top: 0;
+}
+.cms-button {
+    text-align: center;
+    margin: 5px auto;
+    background-color: #7ced84;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+}
+.cms-button a {
+    text-decoration: none;
+    color: white;
+}
+.cms-button a:hover {
+    text-decoration: underline;
+}

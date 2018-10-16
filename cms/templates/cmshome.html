@@ -8,18 +8,48 @@
 
 {% block page %}
 
-    {% if competitions %}
+    {% if user.is_authenticated %}
     
-        {% for competition in competitions %}
-    
-            {{ competition.name }}<br />
-    
-        {% endfor %}
-        
-    {% else %}
-    
-        You haven't set up any competitions yet.
+        <div class="page-header">
+            Welcome, {{ user }}
+        </div>
         
     {% endif %}
+    
+    <section id="competitions">
+        
+        <div class="cms-header">
+            
+            COMPETITIONS    
+        
+        </div>
+            
+        <div class="cms-details">
+            
+            {% if competitions %}
+            
+                {% for competition in competitions %}
+            
+                    {{ competition.name }}<br />
+            
+                {% endfor %}
+                
+            {% else %}
+            
+                You haven't set up any competitions yet.
+                
+            {% endif %}
+            
+        </div>
+        
+        <div class="cms-button">
+            
+            <a href="{% url 'new_competition' %}">
+                New Competition
+            </a>
+            
+        </div>
+        
+    </section>
 
 {% endblock %}

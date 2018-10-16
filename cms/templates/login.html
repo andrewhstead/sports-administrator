@@ -1,0 +1,21 @@
+
+{% block title %}
+
+	<title>Login | Content Management System | SportsAdministrator</title>
+	
+{% endblock %}
+
+{% block page %}
+
+    <h1>
+        LOG IN TO YOUR ACCOUNT
+    </h1>
+
+    <!-- Form for logging in a user. -->
+    <form id="default-form" role="form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="default-button" type="submit">Log In</button>
+    </form>
+            
+{% endblock %}

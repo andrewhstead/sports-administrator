@@ -24,6 +24,7 @@ urlpatterns = [
     path(r'', home_views.home_page, name='home'),
     path('admin/', admin.site.urls),
     path('cms/', cms_views.cms_home, name='cms_home'),
+    path('cms/login/', cms_views.login, name='login'),
 ]
 
 if settings.DEBUG is True:

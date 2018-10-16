@@ -20,3 +20,8 @@ h1 {
     font-style: italic;
     margin: 0px;
 }
+
+.icon-image {
+    height: 15px;
+    width: 15px;
+}

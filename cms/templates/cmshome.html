@@ -8,6 +8,18 @@
 
 {% block page %}
 
-
+    {% if competitions %}
+    
+        {% for competition in competitions %}
+    
+            {{ competition.name }}<br />
+    
+        {% endfor %}
+        
+    {% else %}
+    
+        You haven't set up any competitions yet.
+        
+    {% endif %}
 
 {% endblock %}

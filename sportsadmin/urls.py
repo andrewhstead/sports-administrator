@@ -26,6 +26,7 @@ urlpatterns = [
     path('cms/', cms_views.cms_home, name='cms_home'),
     path('cms/competitions/details/<int:competition_id>/', cms_views.competition_details, name='competition_details'),
     path('cms/competitions/new/', cms_views.new_competition, name='new_competition'),
+    path('cms/configuration/', cms_views.configuration, name='configuration'),
     path('cms/login/', cms_views.login, name='login'),
 ]
 

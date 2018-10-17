@@ -35,3 +35,15 @@ class EditCompetitionForm(forms.ModelForm):
             'country': 'Primary Country',
             'is_active': 'Active',
         }
+    
+
+# Form to create a new competition.
+class ConfigurationForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['site_name', 'site_type']
+        labels = {
+            'site_name': 'Website Name',
+            'site_type': 'Website Type',
+        }

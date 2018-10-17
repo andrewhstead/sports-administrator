@@ -8,13 +8,14 @@
 
 {% block page %}
 
-    {% if user.is_authenticated %}
-    
-        <div class="page-header">
-            Welcome, {{ user }}
-        </div>
+    <div class="page-header">
+        Welcome, {{ user }}
+    </div>
+    <a class="nav-link" href="{% url 'configuration' %}">Site Configuration</a>
         
-    {% endif %}
+    <div class="site-header">
+        {{ user.site_name }}
+    </div>
     
     <section id="competitions">
         

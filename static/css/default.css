@@ -33,18 +33,22 @@ h1 {
 .page-header {
     font-style: italic;
     font-size: 1.5em;
-    margin-bottom: 10px;
 }
 .sub-header {
     font-style: normal;
     font-size: 1.25em;
+}
+.site-header {
+    font-size: 1.25em;
+    text-align: center;
+    margin: 10px auto;
 }
 
 #cms-page {
     margin: 10px;
 }
 .cms-header {
-    margin: 10px 0 0 0;
+    margin: 0;
     background-color: #7ced84;
     color: white;
     font-weight: bold;

@@ -21,3 +21,17 @@ class NewCompetitionForm(forms.ModelForm):
             'sport': 'Sport',
             'country': 'Primary Country',
         }
+    
+
+# Form to create a new competition.
+class EditCompetitionForm(forms.ModelForm):
+
+    class Meta:
+        model = Competition
+        fields = ['name', 'sport', 'country', 'is_active']
+        labels = {
+            'name': 'Competition Name',
+            'sport': 'Sport',
+            'country': 'Primary Country',
+            'is_active': 'Active',
+        }

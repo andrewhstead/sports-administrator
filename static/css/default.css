@@ -33,6 +33,11 @@ h1 {
 .page-header {
     font-style: italic;
     font-size: 1.5em;
+    margin-bottom: 10px;
+}
+.sub-header {
+    font-style: normal;
+    font-size: 1.25em;
 }
 
 #cms-page {
@@ -105,6 +110,23 @@ h1 {
     text-decoration: underline;
 }
 
+#default-form {
+    margin: 10px auto;
+}
 #default-form label {
     display: block;
+}
+#default-form li {
+    list-style-type: none;
+}
+
+.breadcrumbs {
+    text-align: right;
+}
+.nav-link {
+    color: #38a940;
+    text-decoration: none;
+}
+.nav-link:hover {
+    text-decoration: underline;
 }

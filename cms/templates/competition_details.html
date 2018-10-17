@@ -2,7 +2,7 @@
 
 {% block title %}
 
-	<title>New Competition | Content Management System | SportsAdministrator</title>
+	<title>Competition Details | Content Management System | SportsAdministrator</title>
 	
 {% endblock %}
 
@@ -13,7 +13,11 @@
     </div>
 
     <div class="page-header">
-        NEW COMPETITION
+        {{ competition.name }}
+    </div>
+    
+    <div class="sub-header">
+        OVERVIEW
     </div>
     
     <!-- Form for creating a new competition. -->

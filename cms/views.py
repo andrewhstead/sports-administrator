@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from data.models import Sport, Country, Competition
 from django.template.context_processors import csrf
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .forms import LoginForm, NewCompetitionForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm
 
 # Create your views here.
 def cms_home(request):
@@ -66,3 +66,30 @@ def new_competition(request):
     
     args.update(csrf(request))
     return render(request, 'new_competition.html', args)
+    
+
+# Edit an existing competition.
+@login_required(login_url='/login/')
+def competition_details(request, competition_id):
+    competition = get_object_or_404(Competition, pk=competition_id)
+
+    if request.method == 'POST':
+        form = EditCompetitionForm(request.POST, instance=competition)
+        if form.is_valid():
+            form.save()
+
+        messages.success(request, "Competition details successfully edited.")
+
+        return redirect(reverse('cms_home'))
+
+    else:
+        form = EditCompetitionForm(instance=competition)
+
+    args = {
+        'form': form,
+        'form_action': reverse('competition_details', kwargs={'competition_id': competition_id}),
+        'button_text': 'Edit Details',
+        'competition': competition
+    }
+    args.update(csrf(request))
+    return render(request, 'competition_details.html', args)

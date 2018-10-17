@@ -24,6 +24,7 @@ urlpatterns = [
     path(r'', home_views.home_page, name='home'),
     path('admin/', admin.site.urls),
     path('cms/', cms_views.cms_home, name='cms_home'),
+    path('cms/competitions/details/<int:competition_id>/', cms_views.competition_details, name='competition_details'),
     path('cms/competitions/new/', cms_views.new_competition, name='new_competition'),
     path('cms/login/', cms_views.login, name='login'),
 ]

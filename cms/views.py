@@ -5,7 +5,7 @@ from django.template.context_processors import csrf
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, ConfigurationForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm
 
 
 # Create your views here.
@@ -102,20 +102,24 @@ def configuration(request):
     user = request.user
 
     if request.method == 'POST':
-        form = ConfigurationForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            form.save()
+        setup_form = SiteSetupForm(request.POST, request.FILES, instance=user)
+        color_form = SiteColorForm(request.POST, request.FILES, instance=user)
+        if setup_form.is_valid() and color_form.is_valid():
+            setup_form.save()
+            color_form.save()
             messages.success(request, 'Your settings have been saved.')
-            return redirect(reverse('cms_home'))
+            return redirect(reverse('configuration'))
         else:
             messages.error(request, 'Sorry, we were unable to save your settings. Please try again.')
 
     else:
-        form = ConfigurationForm(instance=user)
+        setup_form = SiteSetupForm(instance=user)
+        color_form = SiteColorForm(instance=user)
 
     args = {
-        'form': form,
-        'button_text': 'Confirm Settings'
+        'setup_form': setup_form,
+        'color_form': color_form,
+        'button_text': 'Update Settings'
     }
     
     args.update(csrf(request))

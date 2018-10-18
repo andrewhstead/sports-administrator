@@ -13,14 +13,30 @@
     </div>
 
     <div class="page-header">
-        SITE CONFIGURATION
+        CONFIGURATION
     </div>
-    
-    <!-- Form for creating a new competition. -->
-    <form id="default-form" enctype="multipart/form-data" role="form" method="post">
-        {% csrf_token %}
-        {{ form.as_ul }}
-        <button class="cms-button" type="submit">{{ button_text }}</button>
-    </form>
             
+        <!-- Form to set up the site's details. -->
+        <form id="default-form" enctype="multipart/form-data" role="form" method="post">
+            {% csrf_token %}
+            
+            <div class="cms-header">
+                SITE SETUP    
+            </div>
+            
+            <div class="cms-details">
+                {{ setup_form.as_ul }}
+            </div>
+            
+            <div class="cms-header">
+                COLOUR SETTINGS    
+            </div>
+            
+            <div class="cms-details">
+                {{ color_form.as_ul }}
+            </div>
+            
+            <button class="cms-button" type="submit">{{ button_text }}</button>
+        </form>
+    
 {% endblock %}

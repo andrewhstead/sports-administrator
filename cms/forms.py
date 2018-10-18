@@ -38,15 +38,25 @@ class EditCompetitionForm(forms.ModelForm):
         }
     
 
-# Form to create a new competition.
-class ConfigurationForm(forms.ModelForm):
+# Form to set up the site's details.
+class SiteSetupForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['site_name', 'site_type', 'primary_color', 'primary_text', 'secondary_color', 'secondary_text']
+        fields = ['site_name', 'site_type']
         labels = {
             'site_name': 'Website Name',
             'site_type': 'Website Type',
+        }
+    
+
+# Form to set the site's colour scheme.
+class SiteColorForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['primary_color', 'primary_text', 'secondary_color', 'secondary_text']
+        labels = {
             'primary_text': 'Primary Text Color',
             'primary_color': 'Primary Background Color',
             'secondary_color': 'Secondary Background Color',

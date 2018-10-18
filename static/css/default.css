@@ -58,9 +58,10 @@ h1 {
     border-radius: 10px 10px 0 0;
 }
 .cms-details {
-    padding: 5px;
+    padding: 5px 10px;
     border: 2px solid #7ced84;
     border-top: 0;
+    margin-bottom: 10px;
 }
 .cms-link-button {
     text-align: center;
@@ -86,7 +87,7 @@ h1 {
 }
 .cms-button {
     text-align: center;
-    margin: 5px auto;
+    margin: 0 auto;
     background-color: #7ced84;
     width: fit-content;
     padding: 0 5px;
@@ -119,6 +120,10 @@ h1 {
 }
 #default-form label {
     display: block;
+}
+#default-form input, select {
+    display: block;
+    margin-bottom: 5px;
 }
 #default-form li {
     list-style-type: none;

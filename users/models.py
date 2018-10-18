@@ -17,6 +17,10 @@ class User(AbstractUser):
     organisation = models.CharField(max_length=50, blank=True, null=True)
     site_name = models.CharField(max_length=50, blank=True, null=True)
     site_type = models.CharField(max_length=25, choices=SITE_OPTIONS, blank=True, null=True)
+    primary_color = models.CharField(max_length=10, blank=True, null=True, default="#ffffff")
+    secondary_color = models.CharField(max_length=10, blank=True, null=True, default="#ffffff")
+    primary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")
+    secondary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")
 
     def __unicode__(self):
         return self.username

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, ConfigurationForm
 
+
 # Create your views here.
 def cms_home(request):
     

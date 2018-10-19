@@ -49,6 +49,8 @@ def login(request):
 # Add a new competition.
 @login_required(login_url='/login/')    
 def new_competition(request):
+    
+    user = request.user
 
     if request.method == 'POST':
         form = NewCompetitionForm(request.POST, request.FILES)
@@ -63,6 +65,7 @@ def new_competition(request):
         form = NewCompetitionForm()
 
     args = {
+        'user': user,
         'form': form,
         'button_text': 'Create Competition'
     }
@@ -142,11 +145,15 @@ def edition_details(request, competition_id, edition_id):
 # Add a new edition of a competition.
 @login_required(login_url='/login/')    
 def new_edition(request, competition_id):
+    
+    competition = Competition.objects.get(pk=competition_id)
+    editions = Edition.objects.filter(competition=competition.id)
 
     if request.method == 'POST':
         form = NewEditionForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+
             messages.success(request, 'Edition has been created.')
             return redirect(reverse('cms_home'))
         else:
@@ -156,8 +163,9 @@ def new_edition(request, competition_id):
         form = NewEditionForm()
 
     args = {
+        'competition': competition,
         'form': form,
-        'button_text': 'Create Competition'
+        'button_text': 'Create Edition'
     }
     
     args.update(csrf(request))

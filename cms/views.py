@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from data.models import Sport, Country, Competition
+from data.models import Sport, Country, Competition, Season, Edition
 from users.models import User
 from django.template.context_processors import csrf
 from django.contrib import auth, messages
@@ -74,6 +74,7 @@ def new_competition(request):
 @login_required(login_url='/login/')
 def competition_details(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
+    editions = Edition.objects.filter(competition=competition.id).order_by('-season')
 
     if request.method == 'POST':
         form = EditCompetitionForm(request.POST, instance=competition)
@@ -91,7 +92,8 @@ def competition_details(request, competition_id):
         'form': form,
         'form_action': reverse('competition_details', kwargs={'competition_id': competition_id}),
         'button_text': 'Edit Details',
-        'competition': competition
+        'competition': competition,
+        'editions': editions
     }
     args.update(csrf(request))
     return render(request, 'competition_details.html', args)

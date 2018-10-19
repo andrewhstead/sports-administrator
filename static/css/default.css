@@ -65,7 +65,7 @@ h1 {
 }
 .cms-link-button {
     text-align: center;
-    margin: 5px auto;
+    margin: 5px 0;
     background-color: #7ced84;
     width: fit-content;
     padding: 0 5px;
@@ -87,7 +87,7 @@ h1 {
 }
 .cms-button {
     text-align: center;
-    margin: 0 auto;
+    margin: 5px auto;
     background-color: #7ced84;
     width: fit-content;
     padding: 0 5px;
@@ -120,6 +120,9 @@ h1 {
 }
 #default-form label {
     display: block;
+}
+#default-form button {
+    margin: 0 auto;
 }
 #default-form input, select {
     display: block;

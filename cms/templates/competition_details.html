@@ -29,10 +29,39 @@
         <div class="cms-details">
             {{ form.as_ul }}
         </div>
-            
-        <button class="cms-button" type="submit">{{ button_text }}</button>
-    </form>
         
+        <button class="cms-button" type="submit">{{ button_text }}</button>
+            
+    </form>
+            
+    <div class="cms-header">
+        EDITIONS
+    </div>
+        
+    <div class="cms-details">
+    
+        {% for edition in editions %}
+        
+            <div class="list-item">
+                
+                {% if edition.is_current %}
+                    <strong>{{ edition.season }}</strong>
+                {% else %}
+                    {{ edition.season }}
+                {% endif %}
+                
+                <a class="list-link" href="{% url 'competition_details' competition.id %}">Details</a>
+                
+            </div>
+        
+        {% endfor %}
+    
+    </div>
+    
+    <div class="cms-link-button">
+        <a href="">
+            New Edition
+        </a>
     </div>
             
 {% endblock %}

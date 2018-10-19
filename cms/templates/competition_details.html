@@ -2,7 +2,7 @@
 
 {% block title %}
 
-	<title>Competition Details | Content Management System | SportsAdministrator</title>
+	<title>{{ competition.name }} | Competition Details | Content Management System | SportsAdministrator</title>
 	
 {% endblock %}
 
@@ -16,7 +16,6 @@
         {{ competition.name }}
     </div>
     
-        
     <!-- Form for creating a new competition. -->
     <form id="default-form" enctype="multipart/form-data" role="form" method="post">
         {% csrf_token %}
@@ -50,7 +49,7 @@
                     {{ edition.season }}
                 {% endif %}
                 
-                <a class="list-link" href="{% url 'competition_details' competition.id %}">Details</a>
+                <a class="list-link" href="{% url 'edition_details' competition.id edition.id %}">Details</a>
                 
             </div>
         

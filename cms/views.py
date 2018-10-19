@@ -126,3 +126,13 @@ def configuration(request):
     
     args.update(csrf(request))
     return render(request, 'configuration.html', args)
+    
+
+# Edit an existing edition of a competition.
+@login_required(login_url='/login/')
+def edition_details(request, competition_id, edition_id):
+    
+    competition = Competition.objects.get(pk=competition_id)
+    edition = Edition.objects.get(pk=edition_id)
+
+    return render(request, 'edition_details.html', {'competition': competition, 'edition': edition})

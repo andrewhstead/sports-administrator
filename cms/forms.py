@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.widgets import TextInput
 from users.models import User
-from data.models import Competition
+from data.models import Competition, Edition
 from django.core.exceptions import ValidationError
 
 
@@ -67,4 +67,18 @@ class SiteColorForm(forms.ModelForm):
             'primary_text': TextInput(attrs={'type': 'color'}),
             'secondary_color': TextInput(attrs={'type': 'color'}),
             'secondary_text': TextInput(attrs={'type': 'color'}),
+        }
+    
+
+# Form to create a new edition of a competition.
+class NewEditionForm(forms.ModelForm):
+
+    class Meta:
+        model = Edition
+        fields = ['name', 'competition', 'season', 'is_current']
+        labels = {
+            'name': 'Edition Name',
+            'competition': 'Competition',
+            'season': 'Season',
+            'is_current': 'Current Season',
         }

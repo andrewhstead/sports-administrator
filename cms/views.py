@@ -5,7 +5,7 @@ from django.template.context_processors import csrf
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm
 
 
 # Create your views here.
@@ -46,6 +46,7 @@ def login(request):
     return render(request, 'login.html', args)
     
 
+# Add a new competition.
 @login_required(login_url='/login/')    
 def new_competition(request):
 
@@ -136,3 +137,28 @@ def edition_details(request, competition_id, edition_id):
     edition = Edition.objects.get(pk=edition_id)
 
     return render(request, 'edition_details.html', {'competition': competition, 'edition': edition})
+    
+
+# Add a new edition of a competition.
+@login_required(login_url='/login/')    
+def new_edition(request, competition_id):
+
+    if request.method == 'POST':
+        form = NewEditionForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Edition has been created.')
+            return redirect(reverse('cms_home'))
+        else:
+            messages.error(request, 'Sorry, we were unable to create the new edition. Please try again.')
+
+    else:
+        form = NewEditionForm()
+
+    args = {
+        'form': form,
+        'button_text': 'Create Competition'
+    }
+    
+    args.update(csrf(request))
+    return render(request, 'new_edition.html', args)

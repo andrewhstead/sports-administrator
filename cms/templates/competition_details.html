@@ -16,15 +16,23 @@
         {{ competition.name }}
     </div>
     
-    <div class="sub-header">
-        OVERVIEW
-    </div>
-    
+        
     <!-- Form for creating a new competition. -->
     <form id="default-form" enctype="multipart/form-data" role="form" method="post">
         {% csrf_token %}
-        {{ form.as_ul }}
+            
+            
+        <div class="cms-header">
+            OVERVIEW
+        </div>
+        
+        <div class="cms-details">
+            {{ form.as_ul }}
+        </div>
+            
         <button class="cms-button" type="submit">{{ button_text }}</button>
     </form>
+        
+    </div>
             
 {% endblock %}

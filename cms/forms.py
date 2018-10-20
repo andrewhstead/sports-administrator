@@ -16,7 +16,7 @@ class NewCompetitionForm(forms.ModelForm):
 
     class Meta:
         model = Competition
-        fields = ['name', 'sport', 'country']
+        fields = ['name', 'sport', 'country', 'type', 'format']
         labels = {
             'name': 'Competition Name',
             'sport': 'Sport',
@@ -29,7 +29,7 @@ class EditCompetitionForm(forms.ModelForm):
 
     class Meta:
         model = Competition
-        fields = ['name', 'sport', 'country', 'is_active']
+        fields = ['name', 'sport', 'country', 'type', 'format', 'is_active']
         labels = {
             'name': 'Competition Name',
             'sport': 'Sport',

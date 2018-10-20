@@ -147,7 +147,6 @@ def edition_details(request, competition_id, edition_id):
 def new_edition(request, competition_id):
     
     competition = Competition.objects.get(pk=competition_id)
-    editions = Edition.objects.filter(competition=competition.id)
 
     if request.method == 'POST':
         form = NewEditionForm(request.POST, request.FILES)

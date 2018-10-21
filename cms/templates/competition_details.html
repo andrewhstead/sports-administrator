@@ -25,7 +25,11 @@
         </div>
         
         <div class="cms-details">
-            {{ form.as_ul }}
+            
+            <div class="format-details">
+                {{ form.as_ul }}
+            </div>
+            
         </div>
         
         <button class="cms-button" type="submit">{{ button_text }}</button>
@@ -37,22 +41,34 @@
     </div>
         
     <div class="cms-details">
-    
-        {% for edition in editions %}
         
-            <div class="list-item">
+        {% if editions %}
+    
+            {% for edition in editions %}
+            
+                <div class="format-details list-item">
+                    
+                    {% if edition.is_current %}
+                        <strong>{{ edition.season }}</strong>
+                    {% else %}
+                        {{ edition.season }}
+                    {% endif %}
+                    
+                    <a class="list-link" href="{% url 'edition_details' competition.id edition.id %}">Details</a>
+                    
+                </div>
+            
+            {% endfor %}
                 
-                {% if edition.is_current %}
-                    <strong>{{ edition.season }}</strong>
-                {% else %}
-                    {{ edition.season }}
-                {% endif %}
-                
-                <a class="list-link" href="{% url 'edition_details' competition.id edition.id %}">Details</a>
+        {% else %}
+            
+            <div class="format-details">
+            
+                You haven't set up any editions yet.
                 
             </div>
-        
-        {% endfor %}
+                
+        {% endif %}
     
     </div>
     

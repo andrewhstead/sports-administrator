@@ -31,12 +31,12 @@
             
                 {% for competition in competitions %}
             
-                    <div class="list-item">
+                    <div class="format-details list-item">
                         
                         {% if competition.is_active %}
                             <img class="icon-image" src="{{ MEDIA_URL }}images/icons/tick.png" />
                         {% else %}
-                            <img class="icon-image" src="{{ MEDIA_URL }}images/icons/cross.png" />
+                            <img class="icon-imagev" src="{{ MEDIA_URL }}images/icons/cross.png" />
                         {% endif %}
                         
                         <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.sport.icon }}" />
@@ -58,7 +58,11 @@
                 
             {% else %}
             
-                You haven't set up any competitions yet.
+                <div class="format-details">
+                
+                    You haven't set up any competitions yet.
+                    
+                </div>
                 
             {% endif %}
             

@@ -58,6 +58,10 @@ h1 {
     border-top: 0;
     margin-bottom: 10px;
 }
+.format-details {
+    padding: 5px 10px;
+}
+
 .cms-link-button {
     text-align: center;
     margin: 5px 0;
@@ -108,9 +112,6 @@ h1 {
 }
 .list-link:hover {
     text-decoration: underline;
-}
-.list-item {
-    padding: 5px 10px;
 }
 .list-item:nth-of-type(odd) {
     background-color: #eeffee;

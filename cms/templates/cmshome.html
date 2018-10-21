@@ -34,19 +34,23 @@
                     <div class="list-item">
                         
                         {% if competition.is_active %}
-                            <img class="icon-image active-state" src="{{ MEDIA_URL }}images/icons/tick.png" />
+                            <img class="icon-image" src="{{ MEDIA_URL }}images/icons/tick.png" />
                         {% else %}
-                            <img class="icon-image active-state" src="{{ MEDIA_URL }}images/icons/cross.png" />
+                            <img class="icon-image" src="{{ MEDIA_URL }}images/icons/cross.png" />
                         {% endif %}
                         
                         <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.sport.icon }}" />
                         <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.country.flag }}" />
                         {{ competition.name }}
-                        <a class="list-link" href="{% url 'competition_details' competition.id %}">Details</a>
                         
-                        {% if competition.is_active %}
-                            <a class="list-link" href="">Current</a>
-                        {% endif %}
+                        <div class="list-links">
+                            <a class="list-link" href="{% url 'competition_details' competition.id %}">
+                                Details
+                            </a>
+                            {% if competition.is_active %}
+                                <a class="list-link" href="">Current</a>
+                            {% endif %}
+                        </div>
                         
                     </div>
             

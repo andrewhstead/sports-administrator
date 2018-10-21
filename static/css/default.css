@@ -26,10 +26,6 @@ h1 {
     width: 15px;
 }
 
-.active-state {
-    margin-right: 10px;
-}
-
 .page-header {
     font-style: italic;
     font-size: 1.5em;
@@ -58,7 +54,6 @@ h1 {
     border-radius: 10px 10px 0 0;
 }
 .cms-details {
-    padding: 5px 10px;
     border: 2px solid #7ced84;
     border-top: 0;
     margin-bottom: 10px;
@@ -107,12 +102,18 @@ h1 {
 }
 
 .list-link {
-    margin-left: 5px;
+    margin-right: 5px;
     color: #38a940;
     text-decoration: none;
 }
 .list-link:hover {
     text-decoration: underline;
+}
+.list-item {
+    padding: 5px 10px;
+}
+.list-item:nth-of-type(odd) {
+    background-color: #eeffee;
 }
 
 #default-form {

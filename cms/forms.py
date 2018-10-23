@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.widgets import TextInput
 from users.models import User
-from data.models import Competition, Edition
+from football.models import Competition, Edition
 from django.core.exceptions import ValidationError
 
 

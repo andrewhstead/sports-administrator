@@ -44,9 +44,7 @@
                         {{ competition.name }}
                         
                         <div class="list-links">
-                            <a class="list-link" href="{% url 'competition_details' competition.id %}">
-                                Details
-                            </a>
+                            <a class="list-link" href="{% url 'competition_details' competition.id %}">Details</a>
                             {% if competition.is_active %}
                                 <a class="list-link" href="">Current</a>
                             {% endif %}

@@ -17,61 +17,133 @@
         {{ user.site_name }}
     </div>
     
-    <section id="competitions">
-        
-        <div class="cms-header">
+    <div id="page-content">
+    
+        <section id="competitions">
             
-            COMPETITIONS    
-        
-        </div>
+            <div class="cms-header">
+                
+                COMPETITIONS    
             
-        <div class="cms-details">
-            
-            {% if competitions %}
-            
-                {% for competition in competitions %}
-            
-                    <div class="format-details list-item">
-                        
-                        {% if competition.is_active %}
-                            <img class="icon-image" src="{{ MEDIA_URL }}images/icons/tick.png" />
-                        {% else %}
-                            <img class="icon-imagev" src="{{ MEDIA_URL }}images/icons/cross.png" />
-                        {% endif %}
-                        
-                        <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.sport.icon }}" />
-                        <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.country.flag }}" />
-                        {{ competition.name }}
-                        
-                        <div class="list-links">
-                            <a class="list-link" href="{% url 'competition_details' competition.id %}">Details</a>
+            </div>
+                
+            <div class="cms-details">
+                
+                {% if competitions %}
+                
+                    {% for competition in competitions %}
+                
+                        <div class="format-details list-item">
+                            
                             {% if competition.is_active %}
-                                <a class="list-link" href="">Current</a>
+                                <img class="icon-image" src="{{ MEDIA_URL }}images/icons/tick.png" />
+                            {% else %}
+                                <img class="icon-imagev" src="{{ MEDIA_URL }}images/icons/cross.png" />
                             {% endif %}
+                            
+                            <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.sport.icon }}" />
+                            <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.country.flag }}" />
+                            {{ competition.name }}
+                            
+                            <div class="list-links">
+                                <a class="list-link" href="{% url 'competition_details' competition.id %}">Details</a>
+                                {% if competition.is_active %}
+                                    <a class="list-link" href="">Current</a>
+                                {% endif %}
+                            </div>
+                            
                         </div>
+                
+                    {% endfor %}
+                    
+                {% else %}
+                
+                    <div class="format-details">
+                    
+                        You haven't set up any competitions yet.
                         
                     </div>
-            
-                {% endfor %}
-                
-            {% else %}
-            
-                <div class="format-details">
-                
-                    You haven't set up any competitions yet.
                     
-                </div>
+                {% endif %}
                 
-            {% endif %}
+            </div>
             
-        </div>
+            <div class="cms-link-button">
+                <a href="{% url 'new_competition' %}">
+                    New Competition
+                </a>
+            </div>
+            
+        </section>
         
-        <div class="cms-link-button">
-            <a href="{% url 'new_competition' %}">
-                New Competition
-            </a>
-        </div>
-        
-    </section>
-
+        <section id="clubs">
+            
+            <div class="cms-header">
+                
+                CLUBS    
+            
+            </div>
+                
+            <div class="cms-details">
+                
+                {% if clubs %}
+                
+                    Paginated list of clubs.
+                    
+                {% else %}
+                
+                    <div class="format-details">
+                    
+                        You haven't set up any clubs yet.
+                        
+                    </div>
+                    
+                {% endif %}
+                
+            </div>
+            
+            <div class="cms-link-button">
+                <a href="">
+                    New Club
+                </a>
+            </div>
+            
+        </section>
+            
+        <section id="players">
+            
+            <div class="cms-header">
+                
+                PLAYERS    
+            
+            </div>
+                
+            <div class="cms-details">
+                
+                {% if players %}
+                
+                    Paginated list of players.
+                    
+                {% else %}
+                
+                    <div class="format-details">
+                    
+                        You haven't set up any players yet.
+                        
+                    </div>
+                    
+                {% endif %}
+                
+            </div>
+            
+            <div class="cms-link-button">
+                <a href="">
+                    New Player
+                </a>
+            </div>
+            
+        </section>
+    
+    </div>
+    
 {% endblock %}

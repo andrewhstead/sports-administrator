@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Competition, Edition
+from .models import Edition
 
 # Register your models here.
-admin.site.register(Competition)
 admin.site.register(Edition)

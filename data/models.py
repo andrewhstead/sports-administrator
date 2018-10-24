@@ -1,6 +1,18 @@
 from __future__ import unicode_literals
 from django.db import models
 
+# Options for different types of competition.
+COMPETITION_TYPES = (
+    ('team', "Team Competition"),
+    ('individual', "Individual Competition"),
+)
+
+# Options for different formats of competition.
+COMPETITION_FORMATS = (
+    ('league', "League Competition"),
+    ('knockout', "Knockout Competition"),
+)
+
 # Options for different types of season, to set as calendar year or multi-year.
 SEASON_OPTIONS = (
     ('calendar', "Single Calendar Year"),
@@ -32,6 +44,19 @@ class Season(models.Model):
     objects = models.Manager()
     name = models.CharField(max_length=10)
     type = models.CharField(max_length=10, choices=SEASON_OPTIONS)
+   
+    def __str__(self):
+        return self.name
+        
+        
+class Competition(models.Model):
+    objects = models.Manager()
+    name = models.CharField(max_length=100)
+    sport = models.ForeignKey(Sport, related_name='competitions', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, related_name='competitions', on_delete=models.CASCADE)
+    type = models.CharField(max_length=10, choices=COMPETITION_TYPES)
+    format = models.CharField(max_length=10, choices=COMPETITION_FORMATS)
+    is_active = models.BooleanField(default=True)
    
     def __str__(self):
         return self.name

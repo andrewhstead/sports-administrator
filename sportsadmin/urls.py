@@ -24,12 +24,14 @@ urlpatterns = [
     path(r'', home_views.home_page, name='home'),
     path('admin/', admin.site.urls),
     path('cms/', cms_views.cms_home, name='cms_home'),
+    path('cms/clubs/new/', cms_views.new_club, name='new_club'),
     path('cms/competitions/<int:competition_id>/', cms_views.competition_details, name='competition_details'),
     path('cms/competitions/<int:competition_id>/editions/<int:edition_id>/', cms_views.edition_details, name='edition_details'),
     path('cms/competitions/<int:competition_id>/editions/new/', cms_views.new_edition, name='new_edition'),
     path('cms/competitions/new/', cms_views.new_competition, name='new_competition'),
     path('cms/configuration/', cms_views.configuration, name='configuration'),
     path('cms/login/', cms_views.login, name='login'),
+    path('cms/players/new/', cms_views.new_player, name='new_player'),
 ]
 
 if settings.DEBUG is True:

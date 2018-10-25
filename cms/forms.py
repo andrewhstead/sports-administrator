@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.widgets import TextInput
 from users.models import User
-from football.models import Competition, Edition
+from football.models import Competition, Edition, Club, Player
 from django.core.exceptions import ValidationError
 
 
@@ -81,4 +81,33 @@ class NewEditionForm(forms.ModelForm):
             'competition': 'Competition',
             'season': 'Season',
             'is_current': 'Current Season',
+        }
+    
+
+# Form to create a new club.
+class NewClubForm(forms.ModelForm):
+
+    class Meta:
+        model = Club
+        fields = ['full_name', 'short_name', 'abbreviation', 'country']
+        labels = {
+            'full_name': 'Full Name',
+            'short_name': 'Short Name',
+            'abbreviation': 'Abbreviation',
+            'country': 'Country',
+        }
+    
+
+# Form to create a new player.
+class NewPlayerForm(forms.ModelForm):
+
+    class Meta:
+        model = Player
+        fields = ['first_name', 'middle_names', 'last_name', 'date_of_birth', 'current_club']
+        labels = {
+            'first_name': 'First Name',
+            'middle_names': 'Middle Names',
+            'last_name': 'Last Name',
+            'date_of_birth': 'Date of Birth',
+            'current_club': 'Current Club',
         }

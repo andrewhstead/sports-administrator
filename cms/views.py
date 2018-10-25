@@ -6,7 +6,7 @@ from django.template.context_processors import csrf
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, NewClubForm, NewPlayerForm
 
 
 # Create your views here.
@@ -170,3 +170,59 @@ def new_edition(request, competition_id):
     
     args.update(csrf(request))
     return render(request, 'new_edition.html', args)
+    
+
+# Add a new club.
+@login_required(login_url='/login/')    
+def new_club(request):
+    
+    user = request.user
+
+    if request.method == 'POST':
+        form = NewClubForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Club has been created.')
+            return redirect(reverse('cms_home'))
+        else:
+            messages.error(request, 'Sorry, we were unable to create the club. Please try again.')
+
+    else:
+        form = NewClubForm()
+
+    args = {
+        'user': user,
+        'form': form,
+        'button_text': 'Create Club'
+    }
+    
+    args.update(csrf(request))
+    return render(request, 'new_club.html', args)
+    
+
+# Add a new player.
+@login_required(login_url='/login/')    
+def new_player(request):
+    
+    user = request.user
+
+    if request.method == 'POST':
+        form = NewPlayerForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Player has been created.')
+            return redirect(reverse('cms_home'))
+        else:
+            messages.error(request, 'Sorry, we were unable to create the player. Please try again.')
+
+    else:
+        form = NewPlayerForm()
+
+    args = {
+        'user': user,
+        'form': form,
+        'button_text': 'Create Player'
+    }
+    
+    args.update(csrf(request))
+    return render(request, 'new_player.html', args)

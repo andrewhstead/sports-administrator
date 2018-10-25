@@ -40,10 +40,12 @@ class ClubRecord(models.Model):
 class Player(models.Model):
     objects = models.Manager()
     first_name = models.CharField(max_length=25)
-    middle_names = models.CharField(max_length=100)
+    middle_names = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=50)
     date_of_birth = models.DateField(default=date.today)
-    current_club = models.ForeignKey(Club, related_name='current_players', on_delete=models.CASCADE)
+    place_of_birth = models.CharField(max_length=50, blank=True, null=True)
+    country = models.ForeignKey(Country, related_name='players', on_delete=models.CASCADE, blank=True, null=True)
+    current_club = models.ForeignKey(Club, related_name='current_players', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.full_name

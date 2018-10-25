@@ -103,7 +103,7 @@ class NewPlayerForm(forms.ModelForm):
 
     class Meta:
         model = Player
-        fields = ['first_name', 'middle_names', 'last_name', 'date_of_birth', 'current_club']
+        fields = ['first_name', 'middle_names', 'last_name', 'date_of_birth', 'place_of_birth', 'country', 'current_club']
         labels = {
             'first_name': 'First Name',
             'middle_names': 'Middle Names',

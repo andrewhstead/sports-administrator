@@ -109,5 +109,10 @@ class NewPlayerForm(forms.ModelForm):
             'middle_names': 'Middle Names',
             'last_name': 'Last Name',
             'date_of_birth': 'Date of Birth',
+            'place_of_birth': 'Place of Birth',
+            'country': 'Nationality',
             'current_club': 'Current Club',
+        }
+        widgets = {
+            'date_of_birth': TextInput(attrs={'type': 'date'}),
         }

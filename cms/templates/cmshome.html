@@ -88,7 +88,20 @@
                 
                 {% if clubs %}
                 
-                    Paginated list of clubs.
+                    {% for club in clubs %}
+                
+                        <div class="format-details list-item">
+                            
+                            <img class="icon-image" src="{{ MEDIA_URL }}{{ club.country.flag }}" />
+                            {{ club.full_name }}
+                            
+                            <div class="list-links">
+                                <a class="list-link" href="">Details</a>
+                            </div>
+                            
+                        </div>
+                
+                    {% endfor %}
                     
                 {% else %}
                 
@@ -122,7 +135,20 @@
                 
                 {% if players %}
                 
-                    Paginated list of players.
+                    {% for player in players %}
+                
+                        <div class="format-details list-item">
+                            
+                            <img class="icon-image" src="{{ MEDIA_URL }}{{ player.country.flag }}" />
+                            {{ player.first_name }} {{ player.last_name }} ({{ player.current_club.abbreviation }})
+                            
+                            <div class="list-links">
+                                <a class="list-link" href="">Details</a>
+                            </div>
+                            
+                        </div>
+                
+                    {% endfor %}
                     
                 {% else %}
                 

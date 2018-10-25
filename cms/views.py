@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from data.models import Sport, Country, Season
-from football.models import Competition, Edition
+from football.models import Competition, Edition, Club, Player
 from users.models import User
 from django.template.context_processors import csrf
 from django.contrib import auth, messages
@@ -16,8 +16,10 @@ def cms_home(request):
     
     if user.is_authenticated:
         competitions = Competition.objects.all()
+        clubs = Club.objects.all()
+        players = Player.objects.all()
     
-        return render(request, "cmshome.html", {'competitions': competitions})
+        return render(request, "cmshome.html", {'competitions': competitions, 'clubs': clubs, 'players': players})
         
     else:
         

@@ -158,3 +158,44 @@ h1 {
 .nav-link:hover {
     text-decoration: underline;
 }
+
+.pagination-menu {
+    display: flex;
+    margin-bottom: 10px;
+}
+.pagination-menu div:first-child {
+    border-radius: 10px 0 0 10px;
+}
+.pagination-menu div:last-child {
+    border-radius: 0 10px 10px 0;
+}
+.pagination-button {
+    display: inline;
+    flex: 1;
+    text-align: center;
+    background-color: #7ced84;
+    border: 1px solid #38a940;
+    color: white;
+}
+.pagination-button a {
+    color: white;
+    text-decoration: none;
+}
+.pagination-button a:hover {
+    text-decoration: underline;
+}
+.pagination-current {
+    display: inline;
+    flex: 1;
+    text-align: center;
+    background-color: #eeffee;
+    border: 1px solid #38a940;
+    color: #38a940;
+}
+.pagination-current a {
+    color: white;
+    text-decoration: none;
+}
+.pagination-current a:hover {
+    text-decoration: underline;
+}

@@ -6,6 +6,7 @@ from django.template.context_processors import csrf
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, NewClubForm, NewPlayerForm
 
 
@@ -15,9 +16,20 @@ def cms_home(request):
     user = request.user
     
     if user.is_authenticated:
-        competitions = Competition.objects.all()
-        clubs = Club.objects.all()
-        players = Player.objects.all()
+        competitions = Competition.objects.all().order_by('name')
+        all_clubs = Club.objects.all().order_by('full_name')
+        players = Player.objects.all().order_by('last_name').order_by('first_name')
+    
+        page = request.GET.get('page')
+
+        club_page = Paginator(all_clubs, 5)
+    
+        try:
+            clubs = club_page.page(page)
+        except EmptyPage:
+            clubs = club_page.page(club_page.num_pages)
+        except PageNotAnInteger:
+            clubs = club_page.page(1)
     
         return render(request, "cmshome.html", {'competitions': competitions, 'clubs': clubs, 'players': players})
         

@@ -20,6 +20,11 @@ class Club(models.Model):
     short_name = models.CharField(max_length=15, unique=True)
     abbreviation = models.CharField(max_length=3, unique=True)
     country = models.ForeignKey(Country, related_name='clubs', on_delete=models.CASCADE)
+    logo = models.ImageField(upload_to="images/logos", blank=True, null=True)
+    primary_color = models.CharField(max_length=10, blank=True, null=True, default="#ffffff")
+    secondary_color = models.CharField(max_length=10, blank=True, null=True, default="#ffffff")
+    primary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")
+    secondary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")
 
     def __str__(self):
         return self.full_name
@@ -27,9 +32,9 @@ class Club(models.Model):
 
 class ClubRecord(models.Model):
     objects = models.Manager()
+    club = models.ForeignKey(Club, related_name='club_years', on_delete=models.CASCADE)
     season = models.ForeignKey(Season, related_name='club', on_delete=models.CASCADE, unique=True)
     full_name = models.CharField(max_length=50)
-    club = models.ForeignKey(Club, related_name='club_years', on_delete=models.CASCADE)
     short_name = models.CharField(max_length=15)
     abbreviation = models.CharField(max_length=3)
 
@@ -46,6 +51,7 @@ class Player(models.Model):
     place_of_birth = models.CharField(max_length=50, blank=True, null=True)
     country = models.ForeignKey(Country, related_name='players', on_delete=models.CASCADE, blank=True, null=True)
     current_club = models.ForeignKey(Club, related_name='current_players', on_delete=models.CASCADE, blank=True, null=True)
+    image = models.ImageField(upload_to="images/players", blank=True, null=True)
 
     def __str__(self):
         return self.full_name

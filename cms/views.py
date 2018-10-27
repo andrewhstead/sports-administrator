@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, NewClubForm, NewPlayerForm
+from django.template.defaultfilters import slugify
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, ClubForm, NewPlayerForm
 
 
 # Create your views here.
@@ -181,29 +182,58 @@ def new_edition(request, competition_id):
 # Add a new club.
 @login_required(login_url='/login/')    
 def new_club(request):
-    
-    user = request.user
 
     if request.method == 'POST':
-        form = NewClubForm(request.POST, request.FILES)
+        form = ClubForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            club = form.save(False)
+            club.date_modified = timezone.now()
+            club.slug = slugify(club.full_name)
+            club.save()
             messages.success(request, 'Club has been created.')
             return redirect(reverse('cms_home'))
         else:
             messages.error(request, 'Sorry, we were unable to create the club. Please try again.')
 
     else:
-        form = NewClubForm()
+        form = ClubForm()
 
     args = {
-        'user': user,
         'form': form,
         'button_text': 'Create Club'
     }
     
     args.update(csrf(request))
     return render(request, 'new_club.html', args)
+    
+
+# Edit an existing club.
+@login_required(login_url='/login/')
+def club_details(request, club_slug):
+    club = get_object_or_404(Club, slug=club_slug)
+
+    if request.method == 'POST':
+        form = ClubForm(request.POST, request.FILES, instance=club)
+        if form.is_valid():
+            update = form.save(False)
+            club.date_modified = timezone.now()
+            update.save()
+            messages.success(request, 'Club has been edited successfully.')
+            return redirect(reverse('cms_home'))
+        else:
+            messages.error(request, 'Sorry, we were unable to edit the club. Please try again.')
+
+    else:
+        form = ClubForm(instance=club)
+
+    args = {
+        'form': form,
+        'club': club,
+        'button_text': 'Edit Details'
+    }
+    
+    args.update(csrf(request))
+    return render(request, 'club_details.html', args)
     
 
 # Add a new player.

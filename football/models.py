@@ -28,6 +28,7 @@ class Club(models.Model):
     primary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")
     secondary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")
     date_modified = models.DateTimeField(default=now)
+    slug = models.SlugField(default='')
 
     def __str__(self):
         return self.full_name
@@ -58,7 +59,7 @@ class Player(models.Model):
     date_modified = models.DateTimeField(default=now)
 
     def __str__(self):
-        return self.full_name
+        return self.last_name
 
 
 class PlayerRecord(models.Model):

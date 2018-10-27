@@ -24,7 +24,7 @@ class NewCompetitionForm(forms.ModelForm):
         }
     
 
-# Form to create a new competition.
+# Form to edit a competition.
 class EditCompetitionForm(forms.ModelForm):
 
     class Meta:
@@ -84,17 +84,28 @@ class NewEditionForm(forms.ModelForm):
         }
     
 
-# Form to create a new club.
-class NewClubForm(forms.ModelForm):
+# Form to create or edit a club.
+class ClubForm(forms.ModelForm):
 
     class Meta:
         model = Club
-        fields = ['full_name', 'short_name', 'abbreviation', 'country']
+        fields = ['full_name', 'short_name', 'abbreviation', 'country', 'logo', 'primary_color', 'primary_text', 'secondary_color', 'secondary_text']
         labels = {
             'full_name': 'Full Name',
             'short_name': 'Short Name',
             'abbreviation': 'Abbreviation',
             'country': 'Country',
+            'logo': 'Team Logo',
+            'primary_text': 'Primary Text Color',
+            'primary_color': 'Primary Background Color',
+            'secondary_color': 'Secondary Background Color',
+            'secondary_text': 'Secondary Text Color',
+        }
+        widgets = {
+            'primary_color': TextInput(attrs={'type': 'color'}),
+            'primary_text': TextInput(attrs={'type': 'color'}),
+            'secondary_color': TextInput(attrs={'type': 'color'}),
+            'secondary_text': TextInput(attrs={'type': 'color'}),
         }
     
 

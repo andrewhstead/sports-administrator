@@ -67,40 +67,6 @@
                 {% endif %}
                 
             </div>
-                        
-            <!--<div class="pagination-menu">-->
-
-            <!--    {% if clubs.has_previous %}-->
-            <!--        <div class="pagination-button">-->
-            <!--            <a href="?competitions={{ competitions.previous_page_number }}">-->
-            <!--                &lt;-->
-            <!--            </a>-->
-            <!--        </div>-->
-            <!--    {% endif %}-->
-
-            <!--    {% for page in clubs.paginator.page_range %}-->
-            <!--        {% if page == current_page %}-->
-            <!--            <div class="pagination-current">-->
-            <!--                {{ page }}-->
-            <!--            </div>-->
-            <!--        {% else %}-->
-            <!--            <div class="pagination-button">-->
-            <!--                <a href="?competitions={{ page }}">-->
-            <!--                    {{ page }}-->
-            <!--                </a>-->
-            <!--            </div>-->
-            <!--        {% endif %}-->
-            <!--    {% endfor %}-->
-
-            <!--    {% if clubs.has_next %}-->
-            <!--        <div class="pagination-button">-->
-            <!--            <a href="?competitions={{ competitions.next_page_number }}">-->
-            <!--                &gt;-->
-            <!--            </a>-->
-            <!--        </div>-->
-            <!--    {% endif %}-->
-
-            <!--</div>-->
             
             <div class="cms-link-button">
                 <a href="{% url 'new_competition' %}">
@@ -147,40 +113,6 @@
                     
                 {% endif %}
                 
-            </div>
-                        
-            <div class="pagination-menu">
-
-                {% if clubs.has_previous %}
-                    <div class="pagination-button">
-                        <a href="?clubs={{ clubs.previous_page_number }}#clubs">
-                            &lt;
-                        </a>
-                    </div>
-                {% endif %}
-
-                {% for page in clubs.paginator.page_range %}
-                    {% if page == current_page %}
-                        <div class="pagination-current">
-                            {{ page }}
-                        </div>
-                    {% else %}
-                        <div class="pagination-button">
-                            <a href="?clubs={{ page }}#clubs">
-                                {{ page }}
-                            </a>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-
-                {% if clubs.has_next %}
-                    <div class="pagination-button">
-                        <a href="?clubs={{ clubs.next_page_number }}#clubs">
-                            &gt;
-                        </a>
-                    </div>
-                {% endif %}
-
             </div>
             
             <div class="cms-link-button">

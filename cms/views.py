@@ -16,25 +16,11 @@ def cms_home(request):
     user = request.user
     
     if user.is_authenticated:
-        competitions = Competition.objects.all().order_by('name')
-        clubs = Club.objects.all().order_by('full_name')
-        players = Player.objects.all().order_by('last_name').order_by('first_name')
-
-        club_page = Paginator(clubs, 5)
-        page = request.GET.get('clubs')
-        try:
-            clubs = club_page.page(page)
-        except EmptyPage:
-            clubs = club_page.page(club_page.num_pages)
-        except PageNotAnInteger:
-            clubs = club_page.page(1)
-
-        if page:
-            current_page = int(page)
-        else:
-            current_page = 1
+        competitions = Competition.objects.all().order_by('date_modified')[:5]
+        clubs = Club.objects.all().order_by('date_modified')[:5]
+        players = Player.objects.all().order_by('date_modified')[:5]
         
-        return render(request, "cmshome.html", {"current_page": current_page, 'competitions': competitions, 'clubs': clubs, 'players': players})
+        return render(request, "cmshome.html", {'competitions': competitions, 'clubs': clubs, 'players': players})
         
     else:
         

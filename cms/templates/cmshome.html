@@ -47,9 +47,7 @@
                             
                             <div class="list-links">
                                 <a class="list-link" href="{% url 'competition_details' competition.id %}">Details</a>
-                                {% if competition.is_active %}
-                                    <a class="list-link" href="">Current</a>
-                                {% endif %}
+                                Modified: {{ competition.date_modified|date:'d/m/Y, H:i' }}
                             </div>
                             
                         </div>
@@ -97,6 +95,7 @@
                             
                             <div class="list-links">
                                 <a class="list-link" href="{% url 'club_details' club.slug %}">Details</a>
+                                Modified: {{ club.date_modified|date:'d/m/Y, H:i' }}
                             </div>
                             
                         </div>
@@ -144,6 +143,7 @@
                             
                             <div class="list-links">
                                 <a class="list-link" href="">Details</a>
+                                Modified: {{ player.date_modified|date:'d/m/Y, H:i' }}
                             </div>
                             
                         </div>

@@ -7,6 +7,7 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils import timezone
 from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, NewClubForm, NewPlayerForm
 
 
@@ -16,9 +17,9 @@ def cms_home(request):
     user = request.user
     
     if user.is_authenticated:
-        competitions = Competition.objects.all().order_by('date_modified')[:5]
-        clubs = Club.objects.all().order_by('date_modified')[:5]
-        players = Player.objects.all().order_by('date_modified')[:5]
+        competitions = Competition.objects.all().order_by('-date_modified')[:5]
+        clubs = Club.objects.all().order_by('-date_modified')[:5]
+        players = Player.objects.all().order_by('-date_modified')[:5]
         
         return render(request, "cmshome.html", {'competitions': competitions, 'clubs': clubs, 'players': players})
         
@@ -87,7 +88,9 @@ def competition_details(request, competition_id):
     if request.method == 'POST':
         form = EditCompetitionForm(request.POST, instance=competition)
         if form.is_valid():
-            form.save()
+            update = form.save(False)
+            competition.date_modified = timezone.now()
+            update.save()
 
         messages.success(request, "Competition details successfully edited.")
 

@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
+import datetime
+now = datetime.datetime.now()
 
 # Options for different types of competition.
 COMPETITION_TYPES = (
@@ -56,6 +58,7 @@ class Competition(models.Model):
     country = models.ForeignKey(Country, related_name='competitions', on_delete=models.CASCADE)
     type = models.CharField(max_length=10, choices=COMPETITION_TYPES)
     format = models.CharField(max_length=10, choices=COMPETITION_FORMATS)
+    date_modified = models.DateTimeField(default=now)
     is_active = models.BooleanField(default=True)
    
     def __str__(self):

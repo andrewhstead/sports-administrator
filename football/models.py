@@ -1,6 +1,8 @@
 from datetime import date
 from django.db import models
 from data.models import Country, Competition, Season
+from django.utils import timezone
+now = timezone.now()
 
 # Create your models here.
 class Edition(models.Model):
@@ -25,6 +27,7 @@ class Club(models.Model):
     secondary_color = models.CharField(max_length=10, blank=True, null=True, default="#ffffff")
     primary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")
     secondary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")
+    date_modified = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.full_name
@@ -52,6 +55,7 @@ class Player(models.Model):
     country = models.ForeignKey(Country, related_name='players', on_delete=models.CASCADE, blank=True, null=True)
     current_club = models.ForeignKey(Club, related_name='current_players', on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(upload_to="images/players", blank=True, null=True)
+    date_modified = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.full_name

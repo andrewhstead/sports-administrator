@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.template.defaultfilters import slugify
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, ClubForm, NewPlayerForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, ClubForm, PlayerForm
 
 
 # Create your views here.
@@ -243,7 +243,7 @@ def new_player(request):
     user = request.user
 
     if request.method == 'POST':
-        form = NewPlayerForm(request.POST, request.FILES)
+        form = PlayerForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Player has been created.')
@@ -252,7 +252,7 @@ def new_player(request):
             messages.error(request, 'Sorry, we were unable to create the player. Please try again.')
 
     else:
-        form = NewPlayerForm()
+        form = PlayerForm()
 
     args = {
         'user': user,
@@ -262,3 +262,32 @@ def new_player(request):
     
     args.update(csrf(request))
     return render(request, 'new_player.html', args)
+    
+
+# Edit an existing player.
+@login_required(login_url='/login/')    
+def player_details(request, first_name, last_name, player_id):
+    player = get_object_or_404(Player, pk=player_id)
+
+    if request.method == 'POST':
+        form = PlayerForm(request.POST, request.FILES, instance=player)
+        if form.is_valid():
+            update = form.save(False)
+            player.date_modified = timezone.now()
+            update.save()
+            messages.success(request, 'Player has been edited.')
+            return redirect(reverse('cms_home'))
+        else:
+            messages.error(request, 'Sorry, we were unable to edit the player. Please try again.')
+
+    else:
+        form = PlayerForm(instance=player)
+
+    args = {
+        'player': player,
+        'form': form,
+        'button_text': 'Edit Details'
+    }
+    
+    args.update(csrf(request))
+    return render(request, 'player_details.html', args)

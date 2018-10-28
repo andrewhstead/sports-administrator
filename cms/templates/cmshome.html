@@ -35,19 +35,13 @@
                 
                         <div class="format-details list-item">
                             
-                            {% if competition.is_active %}
-                                <img class="icon-image" src="{{ MEDIA_URL }}images/icons/tick.png" />
-                            {% else %}
-                                <img class="icon-imagev" src="{{ MEDIA_URL }}images/icons/cross.png" />
-                            {% endif %}
-                            
                             <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.sport.icon }}" />
                             <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.country.flag }}" />
                             {{ competition.name }}
                             
-                            <div class="list-links">
-                                <a class="list-link" href="{% url 'competition_details' competition.id %}">Details</a>
-                                Modified: {{ competition.date_modified|date:'d/m/Y, H:i' }}
+                            <div class="list-details">                            
+                                Modified: {{ competition.date_modified|date:'d/m/Y, H:i' }} |
+                                <a class="list-link" href="{% url 'competition_details' competition.id %}">View Details</a>
                             </div>
                             
                         </div>
@@ -93,9 +87,9 @@
                             <img class="icon-image" src="{{ MEDIA_URL }}{{ club.country.flag }}" />
                             {{ club.full_name }}
                             
-                            <div class="list-links">
-                                <a class="list-link" href="{% url 'club_details' club.slug %}">Details</a>
-                                Modified: {{ club.date_modified|date:'d/m/Y, H:i' }}
+                            <div class="list-details">                            
+                                Modified: {{ club.date_modified|date:'d/m/Y, H:i' }} |
+                                <a class="list-link" href="{% url 'club_details' club.slug %}">View Details</a>
                             </div>
                             
                         </div>
@@ -141,9 +135,9 @@
                             <img class="icon-image" src="{{ MEDIA_URL }}{{ player.country.flag }}" />
                             {{ player.first_name }} {{ player.last_name }} ({{ player.current_club.short_name }})
                             
-                            <div class="list-links">
-                                <a class="list-link" href="">Details</a>
-                                Modified: {{ player.date_modified|date:'d/m/Y, H:i' }}
+                            <div class="list-details">
+                                Modified: {{ player.date_modified|date:'d/m/Y, H:i' }} |
+                                <a class="list-link" href="{% url 'player_details' player.first_name|lower player.last_name|lower player.id %}">View Details</a>
                             </div>
                             
                         </div>

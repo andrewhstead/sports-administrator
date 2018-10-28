@@ -33,6 +33,7 @@ urlpatterns = [
     path('cms/configuration/', cms_views.configuration, name='configuration'),
     path('cms/login/', cms_views.login, name='login'),
     path('cms/players/new/', cms_views.new_player, name='new_player'),
+    path('cms/players/<first_name>-<last_name>/<player_id>/', cms_views.player_details, name='player_details'),
 ]
 
 if settings.DEBUG is True:

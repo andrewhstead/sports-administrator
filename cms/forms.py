@@ -109,8 +109,9 @@ class ClubForm(forms.ModelForm):
         }
     
 
-# Form to create a new player.
-class NewPlayerForm(forms.ModelForm):
+# Form to create or edit a player.
+class PlayerForm(forms.ModelForm):
+    current_club = forms.ModelChoiceField(queryset=Club.objects.order_by('full_name'))
 
     class Meta:
         model = Player

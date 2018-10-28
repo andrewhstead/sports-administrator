@@ -119,15 +119,15 @@ h1 {
     outline: none;
 }
 
-.list-link {
+.list-details {
     margin-right: 5px;
     color: #38a940;
     text-decoration: none;
 }
-.list-link:hover {
+.list-details:hover {
     text-decoration: underline;
 }
-.list-item:nth-of-type(odd) {
+.list-details:nth-of-type(odd) {
     background-color: #eeffee;
 }
 

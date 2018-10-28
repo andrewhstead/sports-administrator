@@ -2,7 +2,7 @@
 
 {% block title %}
 
-	<title>{{ competition.name }} | Competition Details | Content Management System | SportsAdministrator</title>
+	<title>{{ player.first_name }} {{ player.last_name }} | Player Details | Content Management System | SportsAdministrator</title>
 	
 {% endblock %}
 
@@ -13,11 +13,11 @@
     </div>
 
     <div class="page-header">
-        <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.country.flag }}" />
-        {{ competition.name }}
+        <img class="icon-image" src="{{ MEDIA_URL }}{{ player.country.flag }}" />
+        {{ player.first_name }} {{ player.last_name }}
     </div>
     
-    <!-- Form for editing a competition. -->
+    <!-- Form for editing a club. -->
     <form id="default-form" enctype="multipart/form-data" role="form" method="post">
         {% csrf_token %}
             
@@ -38,34 +38,20 @@
     </form>
             
     <div class="cms-header">
-        EDITIONS
+        STATISTICS
     </div>
         
     <div class="cms-details">
         
         {% if editions %}
     
-            {% for edition in editions %}
-            
-                <div class="format-details list-item">
-                    
-                    {% if edition.is_current %}
-                        <strong>{{ edition.season }}</strong>
-                    {% else %}
-                        {{ edition.season }}
-                    {% endif %}
-                    
-                    <a class="list-link" href="{% url 'edition_details' competition.id edition.id %}">Details</a>
-                    
-                </div>
-            
-            {% endfor %}
+            List the statistics.
                 
         {% else %}
             
             <div class="format-details">
             
-                You haven't set up any editions yet.
+                This player has no statistics yet.
                 
             </div>
                 
@@ -74,8 +60,8 @@
     </div>
     
     <div class="cms-link-button">
-        <a href="{% url 'new_edition' competition.id %}">
-            New Edition
+        <a href="">
+            New Season
         </a>
     </div>
             

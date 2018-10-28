@@ -15,6 +15,9 @@
     <div class="page-header">
         <img class="icon-image" src="{{ MEDIA_URL }}{{ club.country.flag }}" />
         {{ club.full_name }}
+        {% if club.current_league %}
+            ({{ club.current_league }})
+        {% endif %}
     </div>
     
     <!-- Form for editing a club. -->

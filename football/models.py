@@ -2,7 +2,7 @@ from datetime import date
 from django.db import models
 from data.models import Country, Competition, Season
 from django.utils import timezone
-now = timezone.now()
+now = timezone.now
 
 # Create your models here.
 class Edition(models.Model):
@@ -23,6 +23,7 @@ class Club(models.Model):
     abbreviation = models.CharField(max_length=3, unique=True)
     country = models.ForeignKey(Country, related_name='clubs', on_delete=models.CASCADE)
     logo = models.ImageField(upload_to="images/logos", blank=True, null=True)
+    current_league = models.ForeignKey(Competition, related_name='clubs', on_delete=models.CASCADE, blank=True, null=True)
     primary_color = models.CharField(max_length=10, blank=True, null=True, default="#ffffff")
     secondary_color = models.CharField(max_length=10, blank=True, null=True, default="#ffffff")
     primary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")

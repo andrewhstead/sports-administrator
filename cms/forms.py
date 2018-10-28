@@ -89,13 +89,14 @@ class ClubForm(forms.ModelForm):
 
     class Meta:
         model = Club
-        fields = ['full_name', 'short_name', 'abbreviation', 'country', 'logo', 'primary_color', 'primary_text', 'secondary_color', 'secondary_text']
+        fields = ['full_name', 'short_name', 'abbreviation', 'country', 'logo', 'current_league', 'primary_color', 'primary_text', 'secondary_color', 'secondary_text']
         labels = {
             'full_name': 'Full Name',
             'short_name': 'Short Name',
             'abbreviation': 'Abbreviation',
             'country': 'Country',
             'logo': 'Team Logo',
+            'current_league': 'Current League',
             'primary_text': 'Primary Text Color',
             'primary_color': 'Primary Background Color',
             'secondary_color': 'Secondary Background Color',

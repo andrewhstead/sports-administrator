@@ -159,7 +159,12 @@ def new_edition(request, competition_id):
     if request.method == 'POST':
         form = NewEditionForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            new_edition = form.save()
+            
+            edition_teams = new_edition.teams.all()
+            for team in edition_teams:
+                club_record = ClubRecord(club=team, competition=new_edition.competition, season=new_edition.season)
+                club_record.save()
 
             messages.success(request, 'Edition has been created.')
             return redirect(reverse('cms_home'))

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from data.models import Sport, Country, Season
-from football.models import Competition, Edition, Club, Player
+from football.models import Competition, Edition, Club, Player, ClubRecord
 from users.models import User
 from django.template.context_processors import csrf
 from django.contrib import auth, messages

@@ -72,14 +72,16 @@ class SiteColorForm(forms.ModelForm):
 
 # Form to create a new edition of a competition.
 class NewEditionForm(forms.ModelForm):
+    teams = forms.ModelMultipleChoiceField(queryset=Club.objects.order_by('full_name'))
 
     class Meta:
         model = Edition
-        fields = ['name', 'competition', 'season', 'is_current']
+        fields = ['name', 'competition', 'season', 'is_current', 'teams']
         labels = {
             'name': 'Edition Name',
             'competition': 'Competition',
             'season': 'Season',
+            'teams': 'Teams',
             'is_current': 'Current Season',
         }
     

@@ -5,17 +5,6 @@ from django.utils import timezone
 now = timezone.now
 
 # Create your models here.
-class Edition(models.Model):
-    objects = models.Manager()
-    name = models.CharField(max_length=50)
-    competition = models.ForeignKey(Competition, related_name='editions', on_delete=models.CASCADE)
-    season = models.ForeignKey(Season, related_name='editions', on_delete=models.CASCADE, unique=True)
-    is_current = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Club(models.Model):
     objects = models.Manager()
     full_name = models.CharField(max_length=50, unique=True)
@@ -30,18 +19,6 @@ class Club(models.Model):
     secondary_text = models.CharField(max_length=10, blank=True, null=True, default="#000000")
     date_modified = models.DateTimeField(default=now)
     slug = models.SlugField(default='')
-
-    def __str__(self):
-        return self.full_name
-
-
-class ClubRecord(models.Model):
-    objects = models.Manager()
-    club = models.ForeignKey(Club, related_name='club_years', on_delete=models.CASCADE)
-    season = models.ForeignKey(Season, related_name='club', on_delete=models.CASCADE, unique=True)
-    full_name = models.CharField(max_length=50)
-    short_name = models.CharField(max_length=15)
-    abbreviation = models.CharField(max_length=3)
 
     def __str__(self):
         return self.full_name
@@ -71,3 +48,25 @@ class PlayerRecord(models.Model):
 
     def __str__(self):
         return self.full_name
+        
+        
+class Edition(models.Model):
+    objects = models.Manager()
+    name = models.CharField(max_length=50)
+    competition = models.ForeignKey(Competition, related_name='editions', on_delete=models.CASCADE)
+    teams = models.ManyToManyField(Club, related_name='clubs', blank=True)
+    season = models.ForeignKey(Season, related_name='editions', on_delete=models.CASCADE, unique=True)
+    is_current = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ClubRecord(models.Model):
+    objects = models.Manager()
+    club = models.ForeignKey(Club, related_name='club_years', on_delete=models.CASCADE)
+    competition = models.ForeignKey(Competition, related_name='team', on_delete=models.CASCADE, blank=True, null=True)
+    season = models.ForeignKey(Season, related_name='club', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.club

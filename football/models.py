@@ -4,6 +4,16 @@ from data.models import Country, Competition, Season
 from django.utils import timezone
 now = timezone.now
 
+# Options for club status in league table.
+STATUS_OPTIONS = (
+    ('c', "Champions"),
+    ('p', "Promoted"),
+    ('r', "Relegated"),
+    ('po', "Play-Offs"),
+    ('ppo', "Promoted after Play-Offs"),
+    ('rpo', "Relegated after Play-Offs"),
+)
+
 # Create your models here.
 class Club(models.Model):
     objects = models.Manager()
@@ -92,6 +102,7 @@ class ClubRecord(models.Model):
     goal_average = models.IntegerField(default=0)
     total_points = models.IntegerField(default=0)
     adjustment = models.IntegerField(default=0)
+    status = models.CharField(max_length=50, choices=STATUS_OPTIONS, blank=True, null=True)
 
     def __str__(self):
         return self.club

@@ -46,14 +46,15 @@
             
             {% if clubs %}
                 
-                {% for club in clubs %}
+                {% for team in clubs %}
                 
                     <div class="format-details list-item">
                         
-                        {{ club.full_name }}
-                            
-                        <div class="list-details">                            
-                            
+                        {{ team.full_name }}
+                        
+                        <div class="list-details">  
+                            <a class="list-link" href="">Record</a>|
+                            <a class="list-link" href="{% url 'club_details' team.club.slug %}">Overview</a>
                         </div>
                             
                     </div>

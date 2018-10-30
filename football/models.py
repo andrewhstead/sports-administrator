@@ -67,6 +67,9 @@ class ClubRecord(models.Model):
     club = models.ForeignKey(Club, related_name='club_years', on_delete=models.CASCADE)
     competition = models.ForeignKey(Competition, related_name='team', on_delete=models.CASCADE, blank=True, null=True)
     season = models.ForeignKey(Season, related_name='club', on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=50, blank=True, null=True)
+    short_name = models.CharField(max_length=15, blank=True, null=True)
+    abbreviation = models.CharField(max_length=3, blank=True, null=True)
 
     def __str__(self):
         return self.club

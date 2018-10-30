@@ -15,5 +15,43 @@
     <div class="page-header">
         {{ edition.name }}
     </div>
+    
+    <div id="teams">
+    
+        <div class="cms-header">
+            CLUBS
+        </div>
+        
+        <div class="cms-details">
+            
+            {% if clubs %}
+                
+                {% for club in clubs %}
+                
+                    <div class="format-details list-item">
+                        
+                        {{ club.full_name }}
+                            
+                        <div class="list-details">                            
+                            
+                        </div>
+                            
+                    </div>
+                
+                {% endfor %}
+                    
+            {% else %}
+                
+                <div class="format-details">
+                
+                    No clubs have been added to this edition yet.
+                        
+                </div>
+                    
+            {% endif %}
+            
+        </div>
+        
+    </div>
             
 {% endblock %}

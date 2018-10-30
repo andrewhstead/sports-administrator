@@ -58,7 +58,7 @@ h1 {
     margin: 10px;
 }
 .cms-header {
-    margin: 0;
+    margin: 10px 0 0 0;
     background-color: #7ced84;
     color: white;
     font-weight: bold;
@@ -132,9 +132,6 @@ h1 {
     text-decoration: underline;
 }
 
-#default-form {
-    margin: 10px auto;
-}
 #default-form label {
     display: block;
 }

@@ -140,16 +140,6 @@ def configuration(request):
     return render(request, 'configuration.html', args)
     
 
-# Edit an existing edition of a competition.
-@login_required(login_url='/login/')
-def edition_details(request, competition_id, edition_id):
-    
-    competition = Competition.objects.get(pk=competition_id)
-    edition = Edition.objects.get(pk=edition_id)
-
-    return render(request, 'edition_details.html', {'competition': competition, 'edition': edition})
-    
-
 # Add a new edition of a competition.
 @login_required(login_url='/login/')    
 def new_edition(request, competition_id):
@@ -163,7 +153,8 @@ def new_edition(request, competition_id):
             
             edition_teams = new_edition.teams.all()
             for team in edition_teams:
-                club_record = ClubRecord(club=team, competition=new_edition.competition, season=new_edition.season)
+                club_record = ClubRecord(club=team, competition=new_edition.competition, season=new_edition.season,
+                                            full_name=team.full_name, short_name=team.short_name, abbreviation=team.abbreviation)
                 club_record.save()
 
             messages.success(request, 'Edition has been created.')
@@ -182,6 +173,17 @@ def new_edition(request, competition_id):
     
     args.update(csrf(request))
     return render(request, 'new_edition.html', args)
+    
+
+# Edit an existing edition of a competition.
+@login_required(login_url='/login/')
+def edition_details(request, competition_id, edition_id):
+    
+    competition = Competition.objects.get(pk=competition_id)
+    edition = Edition.objects.get(pk=edition_id)
+    clubs = ClubRecord.objects.filter(competition_id=competition).order_by('full_name')
+
+    return render(request, 'edition_details.html', {'competition': competition, 'edition': edition, 'clubs': clubs})
     
 
 # Add a new club.

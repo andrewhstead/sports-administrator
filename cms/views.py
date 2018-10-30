@@ -84,7 +84,7 @@ def new_competition(request):
 @login_required(login_url='/login/')
 def competition_details(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
-    editions = Edition.objects.filter(competition=competition.id).order_by('-season')
+    editions = Edition.objects.filter(competition=competition.id).order_by('season')
 
     if request.method == 'POST':
         form = EditCompetitionForm(request.POST, instance=competition)
@@ -183,13 +183,20 @@ def edition_details(request, competition_id, edition_id):
     
     competition = Competition.objects.get(pk=competition_id)
     edition = Edition.objects.get(pk=edition_id)
+    current = Edition.objects.get(competition_id=competition_id, is_current=True)
     season = edition.season
     clubs = LeagueRecord.objects.filter(competition_id=competition_id, season=season).order_by('full_name')
     
     if request.method == 'POST':
         form = EditEditionForm(request.POST, request.FILES, instance=edition)
         if form.is_valid():
-            form.save()
+            this_edition = form.save(False)
+            
+            if this_edition.is_current == True:
+                current.is_current = False
+                current.save()
+            
+            this_edition.save()
 
             messages.success(request, 'Edition has been edited.')
             return redirect(reverse('competition_details', args={competition.pk}))

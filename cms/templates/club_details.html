@@ -46,14 +46,14 @@
         
     <div class="cms-details">
         
-        {% if editions %}
+        {% if seasons %}
         
-            {% for edition in editions %}
+            {% for season in seasons %}
 
                 <div class="format-details list-item">
             
-                    {{ edition.season }}: {{ edition.competition }} |
-                    <a class="list-link" href="">View Details</a>
+                    {{ season.season }}: {{ season.competition }} |
+                    <a class="list-link" href="{% url 'club_season' club.slug season.season %}">View Details</a>
 
                 </div>
                 

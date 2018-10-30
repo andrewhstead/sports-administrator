@@ -72,7 +72,7 @@ class Edition(models.Model):
         return self.name
 
 
-class ClubRecord(models.Model):
+class LeagueRecord(models.Model):
     objects = models.Manager()
     club = models.ForeignKey(Club, related_name='club_years', on_delete=models.CASCADE)
     competition = models.ForeignKey(Competition, related_name='team', on_delete=models.CASCADE, blank=True, null=True)

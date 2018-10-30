@@ -26,6 +26,7 @@ urlpatterns = [
     path('cms/', cms_views.cms_home, name='cms_home'),
     path('cms/clubs/new/', cms_views.new_club, name='new_club'),
     path('cms/clubs/<club_slug>/', cms_views.club_details, name='club_details'),
+    path('cms/clubs/<club_slug>/seasons/<str:season>/', cms_views.club_season, name='club_season'),
     path('cms/competitions/<int:competition_id>/', cms_views.competition_details, name='competition_details'),
     path('cms/competitions/<int:competition_id>/editions/<int:edition_id>/', cms_views.edition_details, name='edition_details'),
     path('cms/competitions/<int:competition_id>/editions/new/', cms_views.new_edition, name='new_edition'),

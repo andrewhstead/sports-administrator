@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from data.models import Sport, Country, Season
-from football.models import Competition, Edition, Club, Player, ClubRecord
+from football.models import Competition, Edition, Club, Player, LeagueRecord
 from users.models import User
 from django.template.context_processors import csrf
 from django.contrib import auth, messages
@@ -152,13 +152,15 @@ def new_edition(request, competition_id):
             new_edition = form.save()
             
             edition_teams = new_edition.teams.all()
+            
             for team in edition_teams:
-                club_record = ClubRecord(club=team, competition=new_edition.competition, season=new_edition.season,
-                                            full_name=team.full_name, short_name=team.short_name, abbreviation=team.abbreviation)
-                club_record.save()
+                if competition.format == 'league':
+                    club_record = LeagueRecord(club=team, competition=new_edition.competition, season=new_edition.season,
+                                                full_name=team.full_name, short_name=team.short_name, abbreviation=team.abbreviation)
+                    club_record.save()
 
             messages.success(request, 'Edition has been created.')
-            return redirect(reverse('cms_home'))
+            return redirect(reverse('competition_details', args={competition.pk}))
         else:
             messages.error(request, 'Sorry, we were unable to create the new edition. Please try again.')
 
@@ -182,7 +184,7 @@ def edition_details(request, competition_id, edition_id):
     competition = Competition.objects.get(pk=competition_id)
     edition = Edition.objects.get(pk=edition_id)
     season = edition.season
-    clubs = ClubRecord.objects.filter(competition_id=competition_id, season=season).order_by('full_name')
+    clubs = LeagueRecord.objects.filter(competition_id=competition_id, season=season).order_by('full_name')
     
     if request.method == 'POST':
         form = EditEditionForm(request.POST, request.FILES, instance=edition)
@@ -240,7 +242,7 @@ def new_club(request):
 @login_required(login_url='/login/')
 def club_details(request, club_slug):
     club = get_object_or_404(Club, slug=club_slug)
-    editions = ClubRecord.objects.filter(club_id=club.id)
+    seasons = LeagueRecord.objects.filter(club_id=club.id)
 
     if request.method == 'POST':
         form = ClubForm(request.POST, request.FILES, instance=club)
@@ -259,12 +261,26 @@ def club_details(request, club_slug):
     args = {
         'form': form,
         'club': club,
-        'editions': editions,
+        'seasons': seasons,
         'button_text': 'Edit Details'
     }
     
     args.update(csrf(request))
     return render(request, 'club_details.html', args)
+    
+
+# Edit a club season.
+@login_required(login_url='/login/')
+def club_season(request, club_slug, season):
+    club = get_object_or_404(Club, slug=club_slug)
+    season = get_object_or_404(Season, name=season)
+
+    args = {
+        'club': club,
+        'season': season
+    }
+    
+    return render(request, 'club_season.html', args)
     
 
 # Add a new player.

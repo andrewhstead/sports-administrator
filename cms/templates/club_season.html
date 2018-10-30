@@ -1,0 +1,20 @@
+{% extends "cmsbase.html" %}
+
+{% block title %}
+
+	<title>{{ club.full_name }} {{ season.name }} | Club Details | Content Management System | SportsAdministrator</title>
+	
+{% endblock %}
+
+{% block page %}
+
+    <div class="breadcrumbs">
+        <a class="nav-link" href="{% url 'cms_home' %}">CMS Home</a>
+    </div>
+
+    <div class="page-header">
+        {{ club.full_name }}:
+        {{ season.name }}
+    </div>
+            
+{% endblock %}

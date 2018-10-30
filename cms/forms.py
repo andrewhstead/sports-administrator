@@ -86,6 +86,20 @@ class NewEditionForm(forms.ModelForm):
         }
     
 
+# Form to edit an existing edition of a competition.
+class EditEditionForm(forms.ModelForm):
+
+    class Meta:
+        model = Edition
+        fields = ['name', 'competition', 'season', 'is_current']
+        labels = {
+            'name': 'Edition Name',
+            'competition': 'Competition',
+            'season': 'Season',
+            'is_current': 'Current Season',
+        }
+    
+
 # Form to create or edit a club.
 class ClubForm(forms.ModelForm):
 

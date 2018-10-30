@@ -83,7 +83,7 @@ h1 {
     text-align: center;
     margin: 5px 0;
     background-color: #7ced84;
-    width: fit-content;
+    display: table;
     padding: 0 5px;
     border-radius: 5px;
     border: 1px solid #38a940;

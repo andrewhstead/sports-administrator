@@ -47,8 +47,16 @@
     <div class="cms-details">
         
         {% if editions %}
-    
-            List the seasons.
+        
+            {% for edition in editions %}
+
+                <div class="format-details list-item">
+            
+                    {{ edition.season }}: {{ edition.competition }}
+                
+                </div>
+                
+            {% endfor %}
                 
         {% else %}
             

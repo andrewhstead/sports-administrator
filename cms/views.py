@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.template.defaultfilters import slugify
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, ClubForm, PlayerForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, ClubForm, PlayerForm
 
 
 # Create your views here.
@@ -181,10 +181,32 @@ def edition_details(request, competition_id, edition_id):
     
     competition = Competition.objects.get(pk=competition_id)
     edition = Edition.objects.get(pk=edition_id)
-    clubs = ClubRecord.objects.filter(competition_id=competition).order_by('full_name')
-
-    return render(request, 'edition_details.html', {'competition': competition, 'edition': edition, 'clubs': clubs})
+    season = edition.season
+    clubs = ClubRecord.objects.filter(competition_id=competition_id, season=season).order_by('full_name')
     
+    if request.method == 'POST':
+        form = EditEditionForm(request.POST, request.FILES, instance=edition)
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, 'Edition has been edited.')
+            return redirect(reverse('competition_details', args={competition.pk}))
+        else:
+            messages.error(request, 'Sorry, we were unable to edit the edition. Please try again.')
+
+    else:
+        form = EditEditionForm(instance=edition)
+
+    args = {
+        'competition': competition,
+        'edition': edition,
+        'clubs': clubs,
+        'form': form,
+        'button_text': 'Edit Details'
+    }
+    
+    args.update(csrf(request))
+    return render(request, 'edition_details.html', args)
 
 # Add a new club.
 @login_required(login_url='/login/')    
@@ -218,6 +240,7 @@ def new_club(request):
 @login_required(login_url='/login/')
 def club_details(request, club_slug):
     club = get_object_or_404(Club, slug=club_slug)
+    editions = ClubRecord.objects.filter(club_id=club.id)
 
     if request.method == 'POST':
         form = ClubForm(request.POST, request.FILES, instance=club)
@@ -236,6 +259,7 @@ def club_details(request, club_slug):
     args = {
         'form': form,
         'club': club,
+        'editions': editions,
         'button_text': 'Edit Details'
     }
     

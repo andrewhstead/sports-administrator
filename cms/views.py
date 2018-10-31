@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.template.defaultfilters import slugify
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, ClubForm, PlayerForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, ClubForm, ClubSeasonForm, PlayerForm
 
 
 # Create your views here.
@@ -281,10 +281,26 @@ def club_details(request, club_slug):
 def club_season(request, club_slug, season):
     club = get_object_or_404(Club, slug=club_slug)
     season = get_object_or_404(Season, name=season)
+    league_record = LeagueRecord.objects.get(club_id=club.id, season_id=season.id)
 
+    if request.method == 'POST':
+        season_form = ClubSeasonForm(request.POST, request.FILES, instance=league_record)
+        if season_form.is_valid():
+            season_form.save()
+            messages.success(request, 'Details have been edited successfully.')
+            return redirect(reverse('club_details', args={club_slug}))
+        else:
+            messages.error(request, 'Sorry, we were unable to edit the details. Please try again.')
+
+    else:
+        season_form = ClubSeasonForm(instance=league_record)
+        
     args = {
         'club': club,
-        'season': season
+        'season': season,
+        'league_record': league_record,
+        'season_form': season_form,
+        'button_text': 'Edit Details'
     }
     
     return render(request, 'club_season.html', args)

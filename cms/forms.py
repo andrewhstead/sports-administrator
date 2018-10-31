@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.widgets import TextInput
 from users.models import User
-from football.models import Competition, Edition, Club, Player
+from football.models import Competition, Edition, Club, Player, LeagueRecord
 from django.core.exceptions import ValidationError
 
 
@@ -144,4 +144,17 @@ class PlayerForm(forms.ModelForm):
         }
         widgets = {
             'date_of_birth': TextInput(attrs={'type': 'date'}),
+        }
+    
+
+# Form to edit a club's details for a particular season.
+class ClubSeasonForm(forms.ModelForm):
+
+    class Meta:
+        model = LeagueRecord
+        fields = ['full_name', 'short_name', 'abbreviation']
+        labels = {
+            'full_name': 'Full Name',
+            'short_name': 'Short Name',
+            'abbreviation': 'Abbreviation',
         }

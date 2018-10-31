@@ -105,4 +105,4 @@ class LeagueRecord(models.Model):
     status = models.CharField(max_length=50, choices=STATUS_OPTIONS, blank=True, null=True)
 
     def __str__(self):
-        return self.club
+        return self.full_name

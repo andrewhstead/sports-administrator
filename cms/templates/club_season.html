@@ -13,8 +13,48 @@
     </div>
 
     <div class="page-header">
-        {{ club.full_name }}:
-        {{ season.name }}
+        {{ club.full_name }}: {{ season.name }}<br />
+        {{ season.status }}
     </div>
+    
+    <!-- Form for editing a club's details in this specific season. -->
+    <form id="default-form" enctype="multipart/form-data" role="form" method="post">
+        {% csrf_token %}
+            
+        <div class="cms-header">
+            OVERVIEW
+        </div>
+        
+        <div class="cms-details">
+            
+            <div class="format-details">
+                {{ season_form.as_ul }}
+            </div>
+            
+        </div>
+        
+        <button class="cms-button" type="submit">{{ button_text }}</button>
+            
+    </form>
+    
+    <!-- Form for editing a club's league record. -->
+    <form id="default-form" enctype="multipart/form-data" role="form" method="post">
+        {% csrf_token %}
+            
+        <div class="cms-header">
+            {{ league_record.competition|upper }}
+        </div>
+        
+        <div class="cms-details">
+
+                <div class="format-details list-item">
+                    {{ record_form.as_ul }}
+                </div>
+            
+        </div>
+        
+        <button class="cms-button" type="submit">{{ button_text }}</button>
+            
+    </form>
             
 {% endblock %}

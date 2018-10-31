@@ -158,3 +158,56 @@ class ClubSeasonForm(forms.ModelForm):
             'short_name': 'Short Name',
             'abbreviation': 'Abbreviation',
         }
+    
+
+# Form to edit a club's total record in a league table.
+class TableForm(forms.ModelForm):
+
+    class Meta:
+        model = LeagueRecord
+        fields = ['total_played', 'total_won', 'total_drawn', 'total_lost', 'total_for', 'total_against', 'position', 'table_tiebreaker', 'total_points', 'adjustment', 'status']
+        labels = {
+            'position': 'Pos', 
+            'total_played': 'P', 
+            'total_won': 'W', 
+            'total_drawn': 'D', 
+            'total_lost': 'L', 
+            'total_for': 'F', 
+            'total_against': 'A',
+            'table_tiebreaker': 'TB', 
+            'total_points': 'Pts', 
+            'adjustment': 'Adj', 
+            'status': 'Status',
+        }
+    
+
+# Form to edit a club's home record in a league table.
+class HomeForm(forms.ModelForm):
+
+    class Meta:
+        model = LeagueRecord
+        fields = ['home_played', 'home_won', 'home_drawn', 'home_lost', 'home_for', 'home_against']
+        labels = {
+            'home_played': 'P', 
+            'home_won': 'W', 
+            'home_drawn': 'D', 
+            'home_lost': 'L', 
+            'home_for': 'F', 
+            'home_against': 'A',
+        }
+    
+
+# Form to edit a club's away record in a league table.
+class AwayForm(forms.ModelForm):
+
+    class Meta:
+        model = LeagueRecord
+        fields = ['away_played', 'away_won', 'away_drawn', 'away_lost', 'away_for', 'away_against']
+        labels = {
+            'away_played': 'P', 
+            'away_won': 'W', 
+            'away_drawn': 'D', 
+            'away_lost': 'L', 
+            'away_for': 'F', 
+            'away_against': 'A',
+        }

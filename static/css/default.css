@@ -197,3 +197,12 @@ h1 {
 .pagination-current a:hover {
     text-decoration: underline;
 }
+
+.list-item li {
+    display: inline-block;
+    list-style-type: none;
+}
+.list-item input {
+    width: 35px;
+    display: table;
+}

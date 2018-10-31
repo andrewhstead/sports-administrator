@@ -17,7 +17,7 @@
         {{ season.status }}
     </div>
     
-    <!-- Form for editing a club's details in this specific season. -->
+    <!-- Forms for editing a club's information for this specific season. -->
     <form id="default-form" enctype="multipart/form-data" role="form" method="post">
         {% csrf_token %}
             
@@ -33,23 +33,26 @@
             
         </div>
         
-        <button class="cms-button" type="submit">{{ button_text }}</button>
-            
-    </form>
-    
-    <!-- Form for editing a club's league record. -->
-    <form id="default-form" enctype="multipart/form-data" role="form" method="post">
-        {% csrf_token %}
-            
         <div class="cms-header">
             {{ league_record.competition|upper }}
         </div>
         
         <div class="cms-details">
 
-                <div class="format-details list-item">
-                    {{ record_form.as_ul }}
-                </div>
+            <div class="format-details list-item">
+                TOTALS<br />
+                {{ table_form.as_ul }}
+            </div>
+
+            <div class="format-details list-item">
+                HOME<br />
+                {{ home_form.as_ul }}
+            </div>
+            
+            <div class="format-details list-item">
+                AWAY<br />
+                {{ away_form.as_ul }}
+            </div>
             
         </div>
         

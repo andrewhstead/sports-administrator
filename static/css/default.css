@@ -139,7 +139,6 @@ h1 {
     margin: 0 auto;
 }
 #default-form input, select {
-    display: block;
     margin-bottom: 5px;
 }
 #default-form li {
@@ -205,4 +204,9 @@ h1 {
 .list-item input {
     width: 35px;
     display: table;
+    text-align: right;
+}
+.list-item label {
+    text-align: center;
+    display: inline;
 }

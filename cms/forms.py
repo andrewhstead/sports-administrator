@@ -161,28 +161,27 @@ class ClubSeasonForm(forms.ModelForm):
     
 
 # Form to edit a club's total record in a league table.
-class TableForm(forms.ModelForm):
-
+class TableDetailsForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(TableDetailsForm, self).__init__(*args, **kwargs)
+        
     class Meta:
         model = LeagueRecord
-        fields = ['total_played', 'total_won', 'total_drawn', 'total_lost', 'total_for', 'total_against', 'position', 'table_tiebreaker', 'total_points', 'adjustment', 'status']
+        fields = ['adjustment', 'status']
         labels = {
-            'position': 'Pos', 
-            'total_played': 'P', 
-            'total_won': 'W', 
-            'total_drawn': 'D', 
-            'total_lost': 'L', 
-            'total_for': 'F', 
-            'total_against': 'A',
-            'table_tiebreaker': 'TB', 
-            'total_points': 'Pts', 
-            'adjustment': 'Adj', 
-            'status': 'Status',
+            'adjustment': 'Points Adjustment', 
+            'status': 'Table Status',
         }
     
 
 # Form to edit a club's home record in a league table.
 class HomeForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(HomeForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = LeagueRecord
@@ -199,6 +198,10 @@ class HomeForm(forms.ModelForm):
 
 # Form to edit a club's away record in a league table.
 class AwayForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(AwayForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = LeagueRecord

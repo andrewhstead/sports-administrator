@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.template.defaultfilters import slugify
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, ClubForm, ClubSeasonForm, TableForm, HomeForm, AwayForm, PlayerForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, ClubForm, ClubSeasonForm, TableDetailsForm, HomeForm, AwayForm, PlayerForm
 
 
 # Create your views here.
@@ -285,7 +285,7 @@ def club_season(request, club_slug, season):
 
     if request.method == 'POST':
         season_form = ClubSeasonForm(request.POST, request.FILES, instance=league_record)
-        table_form = TableForm(request.POST, request.FILES, instance=league_record)
+        table_form = TableDetailsForm(request.POST, request.FILES, instance=league_record)
         home_form = HomeForm(request.POST, request.FILES, instance=league_record)
         away_form = AwayForm(request.POST, request.FILES, instance=league_record)
         if season_form.is_valid() and table_form.is_valid() and home_form.is_valid() and away_form.is_valid():
@@ -300,7 +300,7 @@ def club_season(request, club_slug, season):
 
     else:
         season_form = ClubSeasonForm(instance=league_record)
-        table_form = TableForm(instance=league_record)
+        table_form = TableDetailsForm(instance=league_record)
         home_form = HomeForm(instance=league_record)
         away_form = AwayForm(instance=league_record)
         

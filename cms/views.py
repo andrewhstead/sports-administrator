@@ -145,11 +145,16 @@ def configuration(request):
 def new_edition(request, competition_id):
     
     competition = Competition.objects.get(pk=competition_id)
+    current = Edition.objects.get(competition_id=competition_id, is_current=True)
 
     if request.method == 'POST':
         form = NewEditionForm(request.POST, request.FILES)
         if form.is_valid():
+            
             new_edition = form.save()
+            if new_edition.is_current == True:
+                current.is_current = False
+                current.save()
             
             edition_teams = new_edition.teams.all()
             

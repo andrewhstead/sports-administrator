@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.widgets import TextInput
 from users.models import User
-from football.models import Competition, Edition, Club, Player, LeagueRecord
+from football.models import Competition, Edition, Club, ClubSeason, LeagueRecord, Player
 from django.core.exceptions import ValidationError
 
 
@@ -151,7 +151,7 @@ class PlayerForm(forms.ModelForm):
 class ClubSeasonForm(forms.ModelForm):
 
     class Meta:
-        model = LeagueRecord
+        model = ClubSeason
         fields = ['full_name', 'short_name', 'abbreviation']
         labels = {
             'full_name': 'Full Name',

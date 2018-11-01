@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from data.models import Sport, Country, Season
-from football.models import Competition, Edition, Club, Player, LeagueRecord
+from football.models import Competition, Edition, Club, ClubSeason, LeagueRecord, Player
 from users.models import User
 from django.template.context_processors import csrf
 from django.contrib import auth, messages
@@ -154,11 +154,23 @@ def new_edition(request, competition_id):
             edition_teams = new_edition.teams.all()
             
             for team in edition_teams:
-                if competition.format == 'league':
-                    club_record = LeagueRecord(club=team, competition=new_edition.competition, season=new_edition.season,
-                                                full_name=team.full_name, short_name=team.short_name, abbreviation=team.abbreviation)
-                    club_record.save()
-
+                
+                # If the team already has a record for this season, use it to create their league record.
+                try:
+                    club_season = ClubSeason.objects.get(club=team, season=new_edition.season)
+                    if competition.format == 'league':
+                        club_record = LeagueRecord(clubseason=club_season, edition=new_edition)
+                        
+                        club_record.save()
+                # If the team has no record for this season, create one and then use it to create their league record.
+                except ClubSeason.DoesNotExist:
+                    club_season = ClubSeason(club=team, season=new_edition.season, full_name=team.full_name, short_name=team.short_name, abbreviation=team.abbreviation)
+                    club_season.save()
+                    if competition.format == 'league':
+                        club_record = LeagueRecord(clubseason=club_season, edition=new_edition)
+                        
+                        club_record.save()
+                    
             messages.success(request, 'Edition has been created.')
             return redirect(reverse('competition_details', args={competition.pk}))
         else:
@@ -184,8 +196,9 @@ def edition_details(request, competition_id, edition_id):
     competition = Competition.objects.get(pk=competition_id)
     edition = Edition.objects.get(pk=edition_id)
     current = Edition.objects.get(competition_id=competition_id, is_current=True)
-    season = edition.season
-    clubs = LeagueRecord.objects.filter(competition_id=competition_id, season=season).order_by('full_name')
+    clubs = LeagueRecord.objects.filter(edition=edition)
+    
+    
     
     if request.method == 'POST':
         form = EditEditionForm(request.POST, request.FILES, instance=edition)

@@ -75,9 +75,6 @@ h1 {
 .format-details {
     padding: 5px 10px;
 }
-.list-item:nth-of-type(odd) {
-    background-color: #eeffee;
-}
 
 .cms-link-button {
     text-align: center;
@@ -197,6 +194,9 @@ h1 {
     text-decoration: underline;
 }
 
+.list-item:nth-of-type(odd) {
+    background-color: #eeffee;
+}
 .list-item li {
     display: inline-block;
     list-style-type: none;

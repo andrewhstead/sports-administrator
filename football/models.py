@@ -72,14 +72,22 @@ class Edition(models.Model):
         return self.name
 
 
-class LeagueRecord(models.Model):
+class ClubSeason(models.Model):
     objects = models.Manager()
     club = models.ForeignKey(Club, related_name='club_years', on_delete=models.CASCADE)
-    competition = models.ForeignKey(Competition, related_name='team', on_delete=models.CASCADE, blank=True, null=True)
-    season = models.ForeignKey(Season, related_name='club', on_delete=models.CASCADE)
+    season = models.ForeignKey(Season, related_name='club', on_delete=models.CASCADE, blank=True, null=True)
     full_name = models.CharField(max_length=50, blank=True, null=True)
     short_name = models.CharField(max_length=15, blank=True, null=True)
     abbreviation = models.CharField(max_length=3, blank=True, null=True)
+
+    def __str__(self):
+        return self.full_name
+
+
+class LeagueRecord(models.Model):
+    objects = models.Manager()
+    clubseason = models.ForeignKey(ClubSeason, related_name='league', on_delete=models.CASCADE, blank=True, null=True)
+    edition = models.ForeignKey(Edition, related_name='team', on_delete=models.CASCADE, blank=True, null=True)
     position = models.IntegerField(default=1)
     total_played = models.IntegerField(default=0)
     total_won = models.IntegerField(default=0)
@@ -104,5 +112,5 @@ class LeagueRecord(models.Model):
     adjustment = models.IntegerField(default=0)
     status = models.CharField(max_length=50, choices=STATUS_OPTIONS, blank=True, null=True)
 
-    def __str__(self):
-        return self.full_name
+    def __obj__(self):
+        return self.clubseason

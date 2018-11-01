@@ -50,11 +50,11 @@
                 
                     <div class="format-details list-item">
                         
-                        {{ team.full_name }}
+                        {{ team.clubseason.club.full_name }}
                         
                         <div class="list-details">  
-                            <a class="list-link" href="{% url 'club_season' team.club.slug team.season.name %}">Season Record</a>|
-                            <a class="list-link" href="{% url 'club_details' team.club.slug %}">Club Overview</a>
+                            <a class="list-link" href="{% url 'club_season' team.clubseason.club.slug team.clubseason.season.name %}">Season Record</a>|
+                            <a class="list-link" href="{% url 'club_details' team.clubseason.club.slug %}">Club Overview</a>
                         </div>
                             
                     </div>

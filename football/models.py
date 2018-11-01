@@ -88,6 +88,7 @@ class LeagueRecord(models.Model):
     objects = models.Manager()
     clubseason = models.ForeignKey(ClubSeason, related_name='league', on_delete=models.CASCADE, blank=True, null=True)
     edition = models.ForeignKey(Edition, related_name='team', on_delete=models.CASCADE, blank=True, null=True)
+    full_name = models.CharField(max_length=50, blank=True, null=True)
     position = models.IntegerField(default=1)
     total_played = models.IntegerField(default=0)
     total_won = models.IntegerField(default=0)

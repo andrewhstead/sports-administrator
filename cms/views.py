@@ -266,7 +266,7 @@ def new_club(request):
 @login_required(login_url='/login/')
 def club_details(request, club_slug):
     club = get_object_or_404(Club, slug=club_slug)
-    seasons = LeagueRecord.objects.filter(club_id=club.id)
+    seasons = ClubSeason.objects.filter(club_id=club.id)
 
     if request.method == 'POST':
         form = ClubForm(request.POST, request.FILES, instance=club)
@@ -298,10 +298,11 @@ def club_details(request, club_slug):
 def club_season(request, club_slug, season):
     club = get_object_or_404(Club, slug=club_slug)
     season = get_object_or_404(Season, name=season)
-    league_record = LeagueRecord.objects.get(club_id=club.id, season_id=season.id)
+    club_season = ClubSeason.objects.get(club_id=club.id, season_id=season.id)
+    league_record = LeagueRecord.objects.get(clubseason=club_season)
 
     if request.method == 'POST':
-        season_form = ClubSeasonForm(request.POST, request.FILES, instance=league_record)
+        season_form = ClubSeasonForm(request.POST, request.FILES, instance=club_season)
         table_form = TableDetailsForm(request.POST, request.FILES, instance=league_record)
         home_form = HomeForm(request.POST, request.FILES, instance=league_record)
         away_form = AwayForm(request.POST, request.FILES, instance=league_record)
@@ -316,7 +317,7 @@ def club_season(request, club_slug, season):
             messages.error(request, 'Sorry, we were unable to edit the details. Please try again.')
 
     else:
-        season_form = ClubSeasonForm(instance=league_record)
+        season_form = ClubSeasonForm(instance=club_season)
         table_form = TableDetailsForm(instance=league_record)
         home_form = HomeForm(instance=league_record)
         away_form = AwayForm(instance=league_record)

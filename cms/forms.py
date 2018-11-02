@@ -88,14 +88,16 @@ class NewEditionForm(forms.ModelForm):
 
 # Form to edit an existing edition of a competition.
 class EditEditionForm(forms.ModelForm):
+    teams = forms.ModelMultipleChoiceField(queryset=Club.objects.order_by('full_name'))
 
     class Meta:
         model = Edition
-        fields = ['name', 'competition', 'season', 'is_current']
+        fields = ['name', 'competition', 'season', 'is_current', 'teams']
         labels = {
             'name': 'Edition Name',
             'competition': 'Competition',
             'season': 'Season',
+            'teams': 'Teams',
             'is_current': 'Current Season',
         }
     

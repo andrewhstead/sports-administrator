@@ -396,8 +396,26 @@ def player_details(request, first_name, last_name, player_id):
 # Show a complete, paginated list of clubs.
 @login_required(login_url='/login/')    
 def club_list(request):
+    all_clubs = Club.objects.all().order_by('full_name')
+
+    # Pagination is used to show only twenty clubs at a time.
+    page_clubs = Paginator(all_clubs, 20)
+
+    page = request.GET.get('page')
     
-    return render(request, 'club_list.html')
+    if page:
+        current_page = int(page)
+    else:
+        current_page = 1
+
+    try:
+        clubs = page_clubs.page(page)
+    except EmptyPage:
+        clubs = page_clubs.page(page_clubs.num_pages)
+    except PageNotAnInteger:
+        clubs = page_clubs.page(1)
+    
+    return render(request, 'club_list.html', {'clubs': clubs, 'current_page': current_page})
     
 
 # Show a complete, paginated list of competitions.

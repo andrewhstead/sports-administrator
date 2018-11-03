@@ -15,5 +15,62 @@
     <div class="page-header">
         Club List
     </div>
+    
+    <div class="cms-header">
+        ALL CLUBS
+    </div>
+    
+    <div class="cms-details">
+        
+        {% if clubs %}
+            
+            {% for club in clubs %}
+            
+                <div class="format-details list-item">
+                    
+                    {{ club.full_name }} ({{ club.current_league }})
+                    
+                    <div class="list-details">
+                        <a class="list-link" href="{% url 'club_details' club.slug %}">Overview</a>
+                    </div>
+                        
+                </div>
+            
+            {% endfor %}
+                
+        {% else %}
+            
+            <div class="format-details">
+            
+                You have not added any clubs yet.
+                    
+            </div>
+                
+        {% endif %}
+        
+    </div>
+    
+    <!-- Pagination links. -->
+    <div class="full-details">
+
+        <div class="pagination-menu">
+
+            {% for page in clubs.paginator.page_range %}
+                {% if page == current_page %}
+                    <div class="pagination-current">
+                        {{ page }}
+                    </div>
+                {% else %}
+                    <div class="pagination-button">
+                        <a href="?page={{ page }}">
+                            {{ page }}
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+    </div>
             
 {% endblock %}

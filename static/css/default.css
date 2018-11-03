@@ -210,3 +210,15 @@ h1 {
     text-align: center;
     display: inline;
 }
+
+a.header-link {
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: normal;
+}
+
+a.header-link:hover {
+    text-decoration: underline;
+}

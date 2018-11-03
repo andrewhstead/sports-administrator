@@ -391,3 +391,24 @@ def player_details(request, first_name, last_name, player_id):
     
     args.update(csrf(request))
     return render(request, 'player_details.html', args)
+    
+
+# Show a complete, paginated list of clubs.
+@login_required(login_url='/login/')    
+def club_list(request):
+    
+    return render(request, 'club_list.html')
+    
+
+# Show a complete, paginated list of competitions.
+@login_required(login_url='/login/')    
+def competition_list(request):
+    
+    return render(request, 'competition_list.html')
+    
+
+# Show a complete, paginated list of players.
+@login_required(login_url='/login/')    
+def player_list(request):
+    
+    return render(request, 'player_list.html')

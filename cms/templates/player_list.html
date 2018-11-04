@@ -15,5 +15,67 @@
     <div class="page-header">
         Player List
     </div>
+    
+    <div class="cms-header">
+        ALL PLAYERS
+    </div>
+    
+    <div class="cms-details">
+        
+        {% if players %}
+            
+            {% for player in players %}
+            
+                <div class="format-details list-item">
+                    
+                    <img class="icon-image" src="{{ MEDIA_URL }}{{ player.country.flag }}" />
+                    {{ player.first_name }} {{ player.last_name }} ({{ player.current_club.short_name }})
+                    
+                    <div class="list-details">
+                        <a class="list-link" href="{% url 'player_details' player.first_name|lower player.last_name|lower player.id %}">View Details</a>
+                    </div>
+                        
+                </div>
+            
+            {% endfor %}
+                
+        {% else %}
+            
+            <div class="format-details">
+            
+                You have not added any players yet.
+                    
+            </div>
+                
+        {% endif %}
+        
+    </div>
+    
+    {% if total_pages > 1 %}
+    
+        <!-- Pagination links. -->
+        <div class="full-details">
+    
+            <div class="pagination-menu">
+    
+                {% for page in players.paginator.page_range %}
+                    {% if page == current_page %}
+                        <div class="pagination-current">
+                            {{ page }}
+                        </div>
+                    {% else %}
+                        <div class="pagination-button">
+                            <a href="?page={{ page }}">
+                                {{ page }}
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+    
+            </div>
+    
+        </div>
+    
+    {% endif %}
             
 {% endblock %}

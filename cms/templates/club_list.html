@@ -28,6 +28,7 @@
             
                 <div class="format-details list-item">
                     
+                    <img class="icon-image" src="{{ MEDIA_URL }}{{ club.country.flag }}" />
                     {{ club.full_name }} ({{ club.current_league }})
                     
                     <div class="list-details">
@@ -50,27 +51,31 @@
         
     </div>
     
-    <!-- Pagination links. -->
-    <div class="full-details">
-
-        <div class="pagination-menu">
-
-            {% for page in clubs.paginator.page_range %}
-                {% if page == current_page %}
-                    <div class="pagination-current">
-                        {{ page }}
-                    </div>
-                {% else %}
-                    <div class="pagination-button">
-                        <a href="?page={{ page }}">
+    {% if total_pages > 1 %}
+    
+        <!-- Pagination links. -->
+        <div class="full-details">
+    
+            <div class="pagination-menu">
+    
+                {% for page in clubs.paginator.page_range %}
+                    {% if page == current_page %}
+                        <div class="pagination-current">
                             {{ page }}
-                        </a>
-                    </div>
-                {% endif %}
-            {% endfor %}
-
+                        </div>
+                    {% else %}
+                        <div class="pagination-button">
+                            <a href="?page={{ page }}">
+                                {{ page }}
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+    
+            </div>
+    
         </div>
-
-    </div>
+    
+    {% endif %}
             
 {% endblock %}

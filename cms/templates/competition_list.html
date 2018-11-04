@@ -15,5 +15,68 @@
     <div class="page-header">
         Competition List
     </div>
+    
+    <div class="cms-header">
+        ALL COMPETITIONS
+    </div>
+    
+    <div class="cms-details">
+        
+        {% if competitions %}
+            
+            {% for competition in competitions %}
+            
+                <div class="format-details list-item">
+                    
+                    <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.sport.icon }}" />
+                    <img class="icon-image" src="{{ MEDIA_URL }}{{ competition.country.flag }}" />
+                    {{ competition.name }}
+                    
+                    <div class="list-details">
+                        <a class="list-link" href="{% url 'competition_details' competition.id %}">View Details</a>
+                    </div>
+                        
+                </div>
+            
+            {% endfor %}
+                
+        {% else %}
+            
+            <div class="format-details">
+            
+                You have not added any competitions yet.
+                    
+            </div>
+                
+        {% endif %}
+        
+    </div>
+    
+    {% if total_pages > 1 %}
+    
+        <!-- Pagination links. -->
+        <div class="full-details">
+    
+            <div class="pagination-menu">
+    
+                {% for page in competitions.paginator.page_range %}
+                    {% if page == current_page %}
+                        <div class="pagination-current">
+                            {{ page }}
+                        </div>
+                    {% else %}
+                        <div class="pagination-button">
+                            <a href="?page={{ page }}">
+                                {{ page }}
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+    
+            </div>
+    
+        </div>
+    
+    {% endif %}
             
 {% endblock %}

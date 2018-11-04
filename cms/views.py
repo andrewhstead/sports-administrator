@@ -400,6 +400,8 @@ def club_list(request):
 
     # Pagination is used to show only twenty clubs at a time.
     page_clubs = Paginator(all_clubs, 20)
+    
+    total_pages = page_clubs.num_pages
 
     page = request.GET.get('page')
     
@@ -415,18 +417,58 @@ def club_list(request):
     except PageNotAnInteger:
         clubs = page_clubs.page(1)
     
-    return render(request, 'club_list.html', {'clubs': clubs, 'current_page': current_page})
+    return render(request, 'club_list.html', {'clubs': clubs, 'current_page': current_page, 'total_pages': total_pages})
     
 
 # Show a complete, paginated list of competitions.
 @login_required(login_url='/login/')    
 def competition_list(request):
+    all_competitions = Competition.objects.all().order_by('-date_modified')
+
+    # Pagination is used to show only twenty clubs at a time.
+    page_competitions = Paginator(all_competitions, 20)
     
-    return render(request, 'competition_list.html')
+    total_pages = page_competitions.num_pages
+
+    page = request.GET.get('page')
+    
+    if page:
+        current_page = int(page)
+    else:
+        current_page = 1
+
+    try:
+        competitions = page_competitions.page(page)
+    except EmptyPage:
+        competitions = page_competitions.page(page_competitions.num_pages)
+    except PageNotAnInteger:
+        competitions = page_competitions.page(1)
+    
+    return render(request, 'competition_list.html', {'competitions': competitions, 'current_page': current_page, 'total_pages': total_pages})
     
 
 # Show a complete, paginated list of players.
 @login_required(login_url='/login/')    
 def player_list(request):
+    all_players = Player.objects.all().order_by('-date_modified')
+
+    # Pagination is used to show only twenty clubs at a time.
+    page_players = Paginator(all_players, 20)
     
-    return render(request, 'player_list.html')
+    total_pages = page_players.num_pages
+
+    page = request.GET.get('page')
+    
+    if page:
+        current_page = int(page)
+    else:
+        current_page = 1
+
+    try:
+        players = page_players.page(page)
+    except EmptyPage:
+        players = page_players.page(page_players.num_pages)
+    except PageNotAnInteger:
+        players = page_players.page(1)
+    
+    return render(request, 'player_list.html', {'players': players, 'current_page': current_page, 'total_pages': total_pages})

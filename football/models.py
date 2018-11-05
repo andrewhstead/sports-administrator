@@ -16,8 +16,19 @@ STATUS_OPTIONS = (
 
 # The options for game status which are available in the administration area.
 GAME_STATUS = (
-    ('Scheduled', "Scheduled"),
-    ('Completed', "Completed"),
+    ('scheduled', "Scheduled"),
+    ('completed', "Completed"),
+    ('in_progress', "In Progress"),
+    ('postponed', "postponed"),
+)
+
+# The options for tie-breakers which can be used in leagues.
+TIE_BREAKERS = (
+    ('Goal Average', "Goal Average"),
+    ('Goal Difference', "Goal Difference"),
+    ('Goals For', "Goals For"),
+    ('Games Won', "Games Won"),
+    ('Name', "Name"),
 )
 
 # Create your models here.
@@ -73,6 +84,26 @@ class Edition(models.Model):
     teams = models.ManyToManyField(Club, related_name='edition', blank=True)
     season = models.ForeignKey(Season, related_name='editions', on_delete=models.CASCADE, unique=True)
     is_current = models.BooleanField(default=True)
+	# Set up the league's points system.
+    home_win_points = models.IntegerField(default=3)
+    away_win_points = models.IntegerField(default=3)
+    home_draw_points = models.IntegerField(default=1)
+    away_draw_points = models.IntegerField(default=1)
+    home_loss_points = models.IntegerField(default=0)
+    away_loss_points = models.IntegerField(default=0)
+	# Tie breakers default to 'Name' to ensure alphabetical sorting once all other criteria have been applied.
+    tie_breaker_1 = models.CharField(max_length=25, choices=TIE_BREAKERS, default="Name")
+    tie_breaker_2 = models.CharField(max_length=25, choices=TIE_BREAKERS, default="Name")
+    tie_breaker_3 = models.CharField(max_length=25, choices=TIE_BREAKERS, default="Name")
+    tie_breaker_4 = models.CharField(max_length=25, choices=TIE_BREAKERS, default="Name")
+    tie_breaker_5 = models.CharField(max_length=25, choices=TIE_BREAKERS, default="Name")
+	# Places to indicate promotion and relegation issues etc.
+    top_primary_places = models.PositiveIntegerField(default=0)
+    top_secondary_places = models.PositiveIntegerField(default=0)
+    bottom_primary_places = models.PositiveIntegerField(default=0)
+    bottom_secondary_places = models.PositiveIntegerField(default=0)
+	# Places to indicate promotion and relegation issues etc.
+    note = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -135,6 +166,21 @@ class Game(models.Model):
     away_team = models.ForeignKey(Club, related_name='game_away', on_delete=models.CASCADE)
     home_score = models.IntegerField(blank=True, null=True)
     away_score = models.IntegerField(blank=True, null=True)
+    # Statistics fields.
+    home_possession = models.IntegerField(blank=True, null=True)
+    away_possession = models.IntegerField(blank=True, null=True)
+    home_shots = models.IntegerField(blank=True, null=True)
+    away_shots = models.IntegerField(blank=True, null=True)
+    home_on_target = models.IntegerField(blank=True, null=True)
+    away_on_target = models.IntegerField(blank=True, null=True)
+    home_corners = models.IntegerField(blank=True, null=True)
+    away_corners = models.IntegerField(blank=True, null=True)
+    home_fouls = models.IntegerField(blank=True, null=True)
+    away_fouls = models.IntegerField(blank=True, null=True)
+    home_yellow = models.IntegerField(blank=True, null=True)
+    away_yellow = models.IntegerField(blank=True, null=True)
+    home_red = models.IntegerField(blank=True, null=True)
+    away_red = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.game_date) + ': ' + unicode(self.home_team) + ' v ' + unicode(self.away_team)

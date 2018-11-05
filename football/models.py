@@ -14,6 +14,12 @@ STATUS_OPTIONS = (
     ('rpo', "Relegated after Play-Offs"),
 )
 
+# The options for game status which are available in the administration area.
+GAME_STATUS = (
+    ('Scheduled', "Scheduled"),
+    ('Completed', "Completed"),
+)
+
 # Create your models here.
 class Club(models.Model):
     objects = models.Manager()
@@ -115,3 +121,20 @@ class LeagueRecord(models.Model):
 
     def __obj__(self):
         return self.clubseason
+
+
+# Game model for individual matches.
+class Game(models.Model):
+    objects = models.Manager()
+    edition = models.ForeignKey(Edition, related_name='games', on_delete=models.CASCADE)
+    game_status = models.CharField(max_length=10, choices=GAME_STATUS, default="Scheduled")
+    game_date = models.DateField()
+    game_time = models.TimeField(blank=True, null=True)
+    neutral_venue = models.BooleanField(default=False)
+    home_team = models.ForeignKey(Club, related_name='game_home', on_delete=models.CASCADE)
+    away_team = models.ForeignKey(Club, related_name='game_away', on_delete=models.CASCADE)
+    home_score = models.IntegerField(blank=True, null=True)
+    away_score = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return unicode(self.game_date) + ': ' + unicode(self.home_team) + ' v ' + unicode(self.away_team)

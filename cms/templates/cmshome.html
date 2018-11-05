@@ -166,6 +166,49 @@
             </div>
             
         </section>
+            
+        <section id="games">
+            
+            <div class="cms-header">
+                
+                GAMES
+                <a class="header-link" href="">View All</a>
+            
+            </div>
+                
+            <div class="cms-details">
+                
+                {% if games %}
+                
+                    {% for game in games %}
+                
+                        <div class="format-details list-item">
+                            
+                            Moo
+                            
+                        </div>
+                
+                    {% endfor %}
+                    
+                {% else %}
+                
+                    <div class="format-details">
+                    
+                        You haven't set up any games yet.
+                        
+                    </div>
+                    
+                {% endif %}
+                
+            </div>
+            
+            <div class="cms-link-button">
+                <a href="">
+                    New Game
+                </a>
+            </div>
+            
+        </section>
     
     </div>
     

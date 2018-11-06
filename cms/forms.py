@@ -217,13 +217,13 @@ class AwayForm(forms.ModelForm):
     
 
 # Form to create a new game.
-class NewGameForm(forms.ModelForm):
+class GameForm(forms.ModelForm):
     home_team = forms.ModelChoiceField(queryset=Club.objects.order_by('full_name'))
     away_team = forms.ModelChoiceField(queryset=Club.objects.order_by('full_name'))
 
     class Meta:
         model = Game
-        fields = ['edition', 'game_status', 'game_date', 'game_time', 'home_team', 'away_team']
+        fields = ['edition', 'game_date', 'game_time', 'game_status', 'home_team', 'away_team']
         labels = {
             'edition': 'Competition',
             'game_status': 'Status',

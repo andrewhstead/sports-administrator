@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.template.defaultfilters import slugify
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, NewGameForm, ClubForm, ClubSeasonForm, TableDetailsForm, HomeForm, AwayForm, PlayerForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, GameForm, ClubForm, ClubSeasonForm, TableDetailsForm, HomeForm, AwayForm, PlayerForm
 
 
 # Create your views here.
@@ -484,7 +484,7 @@ def new_game(request):
     user = request.user
 
     if request.method == 'POST':
-        form = NewGameForm(request.POST, request.FILES)
+        form = GameForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Game has been created.')
@@ -493,7 +493,7 @@ def new_game(request):
             messages.error(request, 'Sorry, we were unable to create the game. Please try again.')
 
     else:
-        form = NewGameForm()
+        form = GameForm()
 
     args = {
         'user': user,
@@ -530,3 +530,35 @@ def game_list(request):
         games = page_games.page(1)
     
     return render(request, 'game_list.html', {'games': games, 'current_page': current_page, 'total_pages': total_pages})
+    
+
+# Edit an existing game.
+@login_required(login_url='/login/')
+def game_details(request, game_id):
+    game = get_object_or_404(Game, pk=game_id)
+    
+    user = request.user
+
+    if request.method == 'POST':
+        form = GameForm(request.POST, request.FILES, instance=game)
+        if form.is_valid():
+            update = form.save(False)
+            game.date_modified = timezone.now()
+            update.save()
+            messages.success(request, 'Game has been edited.')
+            return redirect(reverse('cms_home'))
+        else:
+            messages.error(request, 'Sorry, we were unable to edit the game. Please try again.')
+
+    else:
+        form = GameForm(instance=game)
+
+    args = {
+        'game': game,
+        'user': user,
+        'form': form,
+        'button_text': 'Edit Details'
+    }
+    
+    args.update(csrf(request))
+    return render(request, 'game_details.html', args)

@@ -74,5 +74,52 @@
         </div>
         
     </div>
+    
+    <div id="games">
+    
+        <div class="cms-header">
+            GAMES
+        </div>
+        
+        <div class="cms-details">
+            
+            {% if games %}
+                
+                {% for game in games %}
+                
+                    <div class="format-details list-item">
+                        
+                        {{ game.game_date|date:'d/m/Y' }}: {{ game.home_team.short_name }}
+                            
+                        {% if game.home_score != null and game.away_score != null %}
+                            {{ game.home_score }}-{{ game.away_score }}
+                        {% else %}
+                            v
+                        {% endif %}
+                            
+                        {{ game.away_team.short_name }}
+                            
+                        <div class="list-details">
+                            Modified: {{ game.date_modified|date:'d/m/Y, H:i' }} |
+                            <a class="list-link" href="">View Details</a>
+                        </div>
+                            
+                    </div>
+                
+                {% endfor %}
+                    
+            {% else %}
+                
+                <div class="format-details">
+                
+                    No games have been added to this edition yet.
+                        
+                </div>
+                    
+            {% endif %}
+            
+        </div>
+        
+    </div>
             
 {% endblock %}

@@ -204,6 +204,7 @@ def edition_details(request, competition_id, edition_id):
     edition = Edition.objects.get(pk=edition_id)
     current = Edition.objects.get(competition_id=competition_id, is_current=True)
     clubs = LeagueRecord.objects.filter(edition=edition).order_by('full_name')
+    games = Game.objects.filter(edition=edition).order_by('home_team').order_by('game_time').order_by('game_date')
     
     if request.method == 'POST':
         form = EditEditionForm(request.POST, request.FILES, instance=edition)
@@ -228,6 +229,7 @@ def edition_details(request, competition_id, edition_id):
         'competition': competition,
         'edition': edition,
         'clubs': clubs,
+        'games': games,
         'form': form,
         'button_text': 'Edit Details'
     }

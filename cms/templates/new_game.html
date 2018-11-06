@@ -16,7 +16,7 @@
         New Game
     </div>
          
-    <!-- Form for creating a new competition. -->
+    <!-- Form for creating a new game. -->
     <form id="default-form" enctype="multipart/form-data" role="form" method="post">
         {% csrf_token %}
     
@@ -27,7 +27,7 @@
         <div class="cms-details">
             
             <div class="format-details">
-                {{ form.as_ul }}
+                {{ overview_form.as_ul }}
             </div>
             
         </div>

@@ -216,8 +216,8 @@ class AwayForm(forms.ModelForm):
         }
     
 
-# Form to create a new game.
-class GameForm(forms.ModelForm):
+# Form to show an overview of a game.
+class GameOverviewForm(forms.ModelForm):
     home_team = forms.ModelChoiceField(queryset=Club.objects.order_by('full_name'))
     away_team = forms.ModelChoiceField(queryset=Club.objects.order_by('full_name'))
 
@@ -235,4 +235,40 @@ class GameForm(forms.ModelForm):
         widgets = {
             'game_date': TextInput(attrs={'type': 'date'}),
             'game_time': TextInput(attrs={'type': 'time'}),
+        }
+    
+
+# Form to show the home team statistics from a game.
+class HomeStatsForm(forms.ModelForm):
+
+    class Meta:
+        model = Game
+        fields = ['home_score', 'home_possession', 'home_shots', 'home_on_target', 'home_corners', 'home_fouls', 'home_yellow', 'home_red']
+        labels = {
+            'home_score': 'Score',
+            'home_possession': 'Possession %',
+            'home_shots': 'Shots',
+            'home_on_target': 'Shots on Target',
+            'home_corners': 'Corners',
+            'home_fouls': 'Fouls',
+            'home_yellow': 'Yellow Cards',
+            'home_red': 'Red Cards',
+        }
+    
+
+# Form to show the away team statistics from a game.
+class AwayStatsForm(forms.ModelForm):
+
+    class Meta:
+        model = Game
+        fields = ['away_score', 'away_possession', 'away_shots', 'away_on_target', 'away_corners', 'away_fouls', 'away_yellow', 'away_red']
+        labels = {
+            'away_score': 'Score',
+            'away_possession': 'Possession %',
+            'away_shots': 'Shots',
+            'away_on_target': 'Shots on Target',
+            'away_corners': 'Corners',
+            'away_fouls': 'Fouls',
+            'away_yellow': 'Yellow Cards',
+            'away_red': 'Red Cards',
         }

@@ -150,8 +150,8 @@ class LeagueRecord(models.Model):
     adjustment = models.IntegerField(default=0)
     status = models.CharField(max_length=50, choices=STATUS_OPTIONS, blank=True, null=True)
 
-    def __obj__(self):
-        return self.clubseason
+    def __str__(self):
+        return self.full_name + ": " + self.edition.season.name
 
 
 # Game model for individual matches.
@@ -159,7 +159,7 @@ class Game(models.Model):
     objects = models.Manager()
     edition = models.ForeignKey(Edition, related_name='games', on_delete=models.CASCADE)
     game_status = models.CharField(max_length=10, choices=GAME_STATUS, default="Scheduled")
-    game_date = models.DateField()
+    game_date = models.DateField(default=date.today)
     game_time = models.TimeField(blank=True, null=True)
     neutral_venue = models.BooleanField(default=False)
     home_team = models.ForeignKey(Club, related_name='game_home', on_delete=models.CASCADE)

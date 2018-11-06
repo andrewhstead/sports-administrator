@@ -118,7 +118,7 @@ class ClubSeason(models.Model):
     abbreviation = models.CharField(max_length=3, blank=True, null=True)
 
     def __str__(self):
-        return self.full_name
+        return self.full_name + " " + self.season.name
 
 
 class LeagueRecord(models.Model):
@@ -166,6 +166,7 @@ class Game(models.Model):
     away_team = models.ForeignKey(Club, related_name='game_away', on_delete=models.CASCADE)
     home_score = models.IntegerField(blank=True, null=True)
     away_score = models.IntegerField(blank=True, null=True)
+    date_modified = models.DateTimeField(default=now)
     # Statistics fields.
     home_possession = models.IntegerField(blank=True, null=True)
     away_possession = models.IntegerField(blank=True, null=True)
@@ -182,5 +183,5 @@ class Game(models.Model):
     home_red = models.IntegerField(blank=True, null=True)
     away_red = models.IntegerField(blank=True, null=True)
 
-    def __unicode__(self):
-        return unicode(self.game_date) + ': ' + unicode(self.home_team) + ' v ' + unicode(self.away_team)
+    def __str__(self):
+        return self.home_team.full_name + " v " + self.away_team.full_name + ": " + str(self.game_date)

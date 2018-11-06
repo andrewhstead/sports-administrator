@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from data.models import Sport, Country, Season
-from football.models import Competition, Edition, Club, ClubSeason, LeagueRecord, Player
+from football.models import Competition, Edition, Club, ClubSeason, LeagueRecord, Player, Game
 from users.models import User
 from django.template.context_processors import csrf
 from django.contrib import auth, messages
@@ -21,8 +21,9 @@ def cms_home(request):
         competitions = Competition.objects.all().order_by('-date_modified')[:5]
         clubs = Club.objects.all().order_by('-date_modified')[:5]
         players = Player.objects.all().order_by('-date_modified')[:5]
+        games = Game.objects.all().order_by('-date_modified')[:5]
         
-        return render(request, "cmshome.html", {'competitions': competitions, 'clubs': clubs, 'players': players})
+        return render(request, "cmshome.html", {'competitions': competitions, 'clubs': clubs, 'players': players, 'games': games})
         
     else:
         

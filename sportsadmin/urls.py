@@ -34,6 +34,7 @@ urlpatterns = [
     path('cms/competitions/list/', cms_views.competition_list, name='competition_list'),
     path('cms/competitions/new/', cms_views.new_competition, name='new_competition'),
     path('cms/configuration/', cms_views.configuration, name='configuration'),
+    path('cms/games/new/', cms_views.new_game, name='new_game'),
     path('cms/login/', cms_views.login, name='login'),
     path('cms/players/list/', cms_views.player_list, name='player_list'),
     path('cms/players/new/', cms_views.new_player, name='new_player'),

@@ -187,7 +187,7 @@
                             <img class="icon-image" src="{{ MEDIA_URL }}{{ game.edition.competition.sport.icon }}" />
                             {{ game.game_date|date:'d/m/Y' }}: {{ game.home_team.short_name }}
                             
-                            {% if game.game_status == 'completed' %}
+                            {% if game.home_score != null and game.away_score != null %}
                                 {{ game.home_score }}-{{ game.away_score }}
                             {% else %}
                                 v
@@ -217,7 +217,7 @@
             </div>
             
             <div class="cms-link-button">
-                <a href="">
+                <a href="{% url 'new_game' %}">
                     New Game
                 </a>
             </div>

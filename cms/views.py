@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.template.defaultfilters import slugify
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, ClubForm, ClubSeasonForm, TableDetailsForm, HomeForm, AwayForm, PlayerForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, NewGameForm, ClubForm, ClubSeasonForm, TableDetailsForm, HomeForm, AwayForm, PlayerForm
 
 
 # Create your views here.
@@ -473,3 +473,31 @@ def player_list(request):
         players = page_players.page(1)
     
     return render(request, 'player_list.html', {'players': players, 'current_page': current_page, 'total_pages': total_pages})
+    
+
+# Add a new game.
+@login_required(login_url='/login/')    
+def new_game(request):
+    
+    user = request.user
+
+    if request.method == 'POST':
+        form = NewGameForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Game has been created.')
+            return redirect(reverse('cms_home'))
+        else:
+            messages.error(request, 'Sorry, we were unable to create the game. Please try again.')
+
+    else:
+        form = NewGameForm()
+
+    args = {
+        'user': user,
+        'form': form,
+        'button_text': 'Create Game'
+    }
+    
+    args.update(csrf(request))
+    return render(request, 'new_game.html', args)

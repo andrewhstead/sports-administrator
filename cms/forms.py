@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.widgets import TextInput
 from users.models import User
-from football.models import Competition, Edition, Club, ClubSeason, LeagueRecord, Player
+from football.models import Competition, Edition, Club, ClubSeason, LeagueRecord, Player, Game
 from django.core.exceptions import ValidationError
 
 
@@ -213,4 +213,22 @@ class AwayForm(forms.ModelForm):
             'away_lost': 'L', 
             'away_for': 'F', 
             'away_against': 'A',
+        }
+    
+
+# Form to create a new game.
+class NewGameForm(forms.ModelForm):
+    home_team = forms.ModelChoiceField(queryset=Club.objects.order_by('full_name'))
+    away_team = forms.ModelChoiceField(queryset=Club.objects.order_by('full_name'))
+
+    class Meta:
+        model = Game
+        fields = ['edition', 'game_status', 'game_date', 'game_time', 'home_team', 'away_team']
+        labels = {
+            'edition': 'Competition',
+            'game_status': 'Status',
+            'game_date': 'Date',
+            'game_time': 'Time',
+            'home_team': 'Home Team',
+            'away_team': 'Away Team',
         }

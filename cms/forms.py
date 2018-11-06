@@ -232,3 +232,7 @@ class NewGameForm(forms.ModelForm):
             'home_team': 'Home Team',
             'away_team': 'Away Team',
         }
+        widgets = {
+            'game_date': TextInput(attrs={'type': 'date'}),
+            'game_time': TextInput(attrs={'type': 'time'}),
+        }

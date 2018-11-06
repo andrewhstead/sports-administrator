@@ -501,3 +501,30 @@ def new_game(request):
     
     args.update(csrf(request))
     return render(request, 'new_game.html', args)
+    
+
+# Show a complete, paginated list of games.
+@login_required(login_url='/login/')    
+def game_list(request):
+    all_games = Game.objects.all().order_by('-date_modified')
+
+    # Pagination is used to show only twenty games at a time.
+    page_games = Paginator(all_games, 20)
+    
+    total_pages = page_games.num_pages
+
+    page = request.GET.get('page')
+    
+    if page:
+        current_page = int(page)
+    else:
+        current_page = 1
+
+    try:
+        games = page_games.page(page)
+    except EmptyPage:
+        games = page_games.page(page_games.num_pages)
+    except PageNotAnInteger:
+        games = page_games.page(1)
+    
+    return render(request, 'game_list.html', {'games': games, 'current_page': current_page, 'total_pages': total_pages})

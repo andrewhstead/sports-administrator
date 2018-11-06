@@ -1,0 +1,90 @@
+{% extends "cmsbase.html" %}
+
+{% block title %}
+
+	<title>Game List | Content Management System | SportsAdministrator</title>
+	
+{% endblock %}
+
+{% block page %}
+
+    <div class="breadcrumbs">
+        <a class="nav-link" href="{% url 'cms_home' %}">CMS Home</a>
+    </div>
+
+    <div class="page-header">
+        Game List
+    </div>
+    
+    <div class="cms-header">
+        ALL GAMES
+    </div>
+    
+    <div class="cms-details">
+        
+        {% if games %}
+            
+            {% for game in games %}
+                
+                <div class="format-details list-item">
+                            
+                    <img class="icon-image" src="{{ MEDIA_URL }}{{ game.edition.competition.sport.icon }}" />
+                    {{ game.game_date|date:'d/m/Y' }}: {{ game.home_team.short_name }}
+                        
+                    {% if game.home_score != null and game.away_score != null %}
+                        {{ game.home_score }}-{{ game.away_score }}
+                    {% else %}
+                        v
+                    {% endif %}
+                            
+                    {{ game.away_team.short_name }}
+                            
+                    <div class="list-details">
+                        Modified: {{ game.date_modified|date:'d/m/Y, H:i' }} |
+                        <a class="list-link" href="">View Details</a>
+                    </div>
+                            
+                </div>
+            
+            {% endfor %}
+                
+        {% else %}
+            
+            <div class="format-details">
+            
+                You have not added any games yet.
+                    
+            </div>
+                
+        {% endif %}
+        
+    </div>
+    
+    {% if total_pages > 1 %}
+    
+        <!-- Pagination links. -->
+        <div class="full-details">
+    
+            <div class="pagination-menu">
+    
+                {% for page in games.paginator.page_range %}
+                    {% if page == current_page %}
+                        <div class="pagination-current">
+                            {{ page }}
+                        </div>
+                    {% else %}
+                        <div class="pagination-button">
+                            <a href="?page={{ page }}">
+                                {{ page }}
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+    
+            </div>
+    
+        </div>
+    
+    {% endif %}
+            
+{% endblock %}

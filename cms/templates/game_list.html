@@ -41,7 +41,7 @@
                             
                     <div class="list-details">
                         Modified: {{ game.date_modified|date:'d/m/Y, H:i' }} |
-                        <a class="list-link" href="">View Details</a>
+                        <a class="list-link" href="{% url 'game_details' game.id %}">View Details</a>
                     </div>
                             
                 </div>

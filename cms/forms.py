@@ -223,17 +223,19 @@ class GameForm(forms.ModelForm):
 
     class Meta:
         model = Game
-        fields = ['edition', 'game_date', 'game_time', 'game_status', 'home_team', 'away_team', 
-                    'home_score', 'home_possession', 'home_shots', 'home_on_target', 'home_corners', 'home_fouls', 'home_yellow', 'home_red', 
-                    'away_score', 'away_possession', 'away_shots', 'away_on_target', 'away_corners', 'away_fouls', 'away_yellow', 'away_red']
+        fields = ['edition', 'game_date', 'game_time', 'game_status', 'home_team', 'away_team', 'home_score', 'away_score', 'attendance',
+                   'home_possession', 'home_shots', 'home_on_target', 'home_corners', 'home_fouls', 'home_yellow', 'home_red', 
+                   'away_possession', 'away_shots', 'away_on_target', 'away_corners', 'away_fouls', 'away_yellow', 'away_red']
         labels = {
             'edition': 'Competition',
             'game_status': 'Status',
             'game_date': 'Date',
             'game_time': 'Time',
             'home_team': 'Home Team',
+            'home_score': 'Home Score',
             'away_team': 'Away Team',
-            'home_score': 'Score',
+            'away_score': 'Away Score',
+            'attendance': 'Attendance',
             'home_possession': 'Possession %',
             'home_shots': 'Shots',
             'home_on_target': 'Shots on Target',
@@ -241,7 +243,6 @@ class GameForm(forms.ModelForm):
             'home_fouls': 'Fouls',
             'home_yellow': 'Yellow Cards',
             'home_red': 'Red Cards',
-            'away_score': 'Score',
             'away_possession': 'Possession %',
             'away_shots': 'Shots',
             'away_on_target': 'Shots on Target',

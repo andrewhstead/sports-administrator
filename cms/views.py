@@ -487,17 +487,18 @@ def new_game(request):
         form = GameForm(request.POST, request.FILES)
         if form.is_valid():
             new_game = form.save(False)
+            
+            home_team = new_game.home_team
+            away_team = new_game.away_team
+            edition = new_game.edition
+                
+            home_season = ClubSeason.objects.get(club_id=home_team.id, season=edition.season)
+            away_season = ClubSeason.objects.get(club_id=away_team.id, season=edition.season)
+                
+            home_record = LeagueRecord.objects.get(clubseason=home_season, edition=edition)
+            away_record = LeagueRecord.objects.get(clubseason=away_season, edition=edition)
                 
             if new_game.game_status == 'completed':
-                home_team = new_game.home_team
-                away_team = new_game.away_team
-                edition = new_game.edition
-                
-                home_season = ClubSeason.objects.get(club_id=home_team.id, season=edition.season)
-                away_season = ClubSeason.objects.get(club_id=away_team.id, season=edition.season)
-                
-                home_record = LeagueRecord.objects.get(clubseason=home_season, edition=edition)
-                away_record = LeagueRecord.objects.get(clubseason=away_season, edition=edition)
                 
                 home_record.home_played += 1
                 away_record.away_played += 1
@@ -564,6 +565,7 @@ def new_game(request):
 @login_required(login_url='/login/')
 def game_details(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
+    initial = game
     
     user = request.user
 
@@ -572,23 +574,62 @@ def game_details(request, game_id):
         if form.is_valid():
             update = form.save(False)
             update.date_modified = timezone.now()
-            
+
             home_team = update.home_team
             away_team = update.away_team
             edition = update.edition
-            
+                
             home_season = ClubSeason.objects.get(club_id=home_team.id, season=edition.season)
             away_season = ClubSeason.objects.get(club_id=away_team.id, season=edition.season)
-            
+                
             home_record = LeagueRecord.objects.get(clubseason=home_season, edition=edition)
             away_record = LeagueRecord.objects.get(clubseason=away_season, edition=edition)
-            
-            home_record.total_played += 1
-            home_record.save()
-            away_record.total_played += 1
-            away_record.save()
+                
+            if initial.game_status != 'completed' and update.game_status == 'completed':
+                
+                home_record.home_played += 1
+                away_record.away_played += 1
+                home_record.total_played += 1
+                away_record.total_played += 1
+                
+                if new_game.home_score > new_game.away_score:
+                    home_record.home_won += 1
+                    away_record.away_lost += 1
+                    home_record.total_won += 1
+                    away_record.total_lost += 1
+                    home_record.total_points += edition.home_win_points
+                elif new_game.home_score < new_game.away_score:
+                    home_record.home_lost += 1
+                    away_record.away_won += 1
+                    home_record.total_lost += 1
+                    away_record.total_won += 1
+                    away_record.total_points += edition.away_win_points
+                else:
+                    home_record.home_drawn += 1
+                    away_record.away_drawn += 1
+                    home_record.total_drawn += 1
+                    away_record.total_drawn += 1
+                    home_record.total_points += edition.home_draw_points
+                    away_record.total_points += edition.away_draw_points
+                    
+                home_record.home_for += new_game.home_score
+                away_record.away_for += new_game.away_score    
+                home_record.total_for += new_game.home_score
+                away_record.total_for += new_game.away_score
+                
+                home_record.home_against += new_game.away_score
+                away_record.away_against += new_game.home_score 
+                home_record.total_against += new_game.away_score
+                away_record.total_against += new_game.home_score
+                
+                home_record.table_tiebreaker = home_record.total_for - home_record.total_against
+                away_record.table_tiebreaker = away_record.total_for - away_record.total_against
+                    
+                home_record.save()
+                away_record.save()
             
             update.save()
+            
             messages.success(request, 'Game has been edited.')
             return redirect(reverse('cms_home'))
         else:

@@ -13,5 +13,39 @@
         {{ site_name }}
         
     </div>
+    
+    <table>
+        
+        <tr>
+            <th>Pos</th>
+            <th>Team</th>
+            <th>P</th>
+            <th>W</th>
+            <th>D</th>
+            <th>L</th>
+            <th>F</th>
+            <th>A</th>
+            <th>GD</th>
+            <th>Pts</th>
+        </tr>
+        
+    {% for club in clubs %}
+    
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ club.full_name }}</td>
+            <td>{{ club.total_played }}</td>
+            <td>{{ club.total_won }}</td>
+            <td>{{ club.total_drawn }}</td>
+            <td>{{ club.total_lost }}</td>
+            <td>{{ club.total_for }}</td>
+            <td>{{ club.total_against }}</td>
+            <td>{{ club.table_tiebreaker }}</td>
+            <td>{{ club.total_points }}</td>
+        </tr>
+    
+    {% endfor %}
+    
+    </table>
 
 {% endblock %}

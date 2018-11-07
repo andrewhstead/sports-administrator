@@ -565,7 +565,7 @@ def new_game(request):
 @login_required(login_url='/login/')
 def game_details(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
-    initial = game
+    initial = game.game_status
     
     user = request.user
 
@@ -585,20 +585,20 @@ def game_details(request, game_id):
             home_record = LeagueRecord.objects.get(clubseason=home_season, edition=edition)
             away_record = LeagueRecord.objects.get(clubseason=away_season, edition=edition)
                 
-            if initial.game_status != 'completed' and update.game_status == 'completed':
+            if initial != 'completed' and update.game_status == 'completed':
                 
                 home_record.home_played += 1
                 away_record.away_played += 1
                 home_record.total_played += 1
                 away_record.total_played += 1
                 
-                if new_game.home_score > new_game.away_score:
+                if update.home_score > update.away_score:
                     home_record.home_won += 1
                     away_record.away_lost += 1
                     home_record.total_won += 1
                     away_record.total_lost += 1
                     home_record.total_points += edition.home_win_points
-                elif new_game.home_score < new_game.away_score:
+                elif update.home_score < update.away_score:
                     home_record.home_lost += 1
                     away_record.away_won += 1
                     home_record.total_lost += 1
@@ -612,15 +612,15 @@ def game_details(request, game_id):
                     home_record.total_points += edition.home_draw_points
                     away_record.total_points += edition.away_draw_points
                     
-                home_record.home_for += new_game.home_score
-                away_record.away_for += new_game.away_score    
-                home_record.total_for += new_game.home_score
-                away_record.total_for += new_game.away_score
+                home_record.home_for += update.home_score
+                away_record.away_for += update.away_score    
+                home_record.total_for += update.home_score
+                away_record.total_for += update.away_score
                 
-                home_record.home_against += new_game.away_score
-                away_record.away_against += new_game.home_score 
-                home_record.total_against += new_game.away_score
-                away_record.total_against += new_game.home_score
+                home_record.home_against += update.away_score
+                away_record.away_against += update.home_score 
+                home_record.total_against += update.away_score
+                away_record.total_against += update.home_score
                 
                 home_record.table_tiebreaker = home_record.total_for - home_record.total_against
                 away_record.table_tiebreaker = away_record.total_for - away_record.total_against

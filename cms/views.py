@@ -565,12 +565,13 @@ def new_game(request):
 @login_required(login_url='/login/')
 def game_details(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
-    initial = game.game_status
+    initial_status = game.game_status
+    current_result = {'home_team': game.home_team, 'away_team': game.away_team, 'home_score': game.home_score, 'away_score': game.away_score}
     
     user = request.user
 
     if request.method == 'POST':
-        form = GameForm(request.POST, request.FILES, instance=game)
+        form = GameForm(request.POST, request.FILES, initial=current_result, instance=game)
         if form.is_valid():
             update = form.save(False)
             update.date_modified = timezone.now()
@@ -585,7 +586,7 @@ def game_details(request, game_id):
             home_record = LeagueRecord.objects.get(clubseason=home_season, edition=edition)
             away_record = LeagueRecord.objects.get(clubseason=away_season, edition=edition)
                 
-            if initial != 'completed' and update.game_status == 'completed':
+            if initial_status != 'completed' and update.game_status == 'completed':
                 
                 home_record.home_played += 1
                 away_record.away_played += 1
@@ -627,6 +628,25 @@ def game_details(request, game_id):
                     
                 home_record.save()
                 away_record.save()
+                
+            elif initial_status == 'completed' and update.game_status == 'completed':
+                
+                if form.has_changed():
+                    
+                    home_record.home_for = home_record.total_for - current_result['home_score'] + update.home_score
+                    home_record.total_for = home_record.total_for - current_result['home_score'] + update.home_score
+                    away_record.away_for = away_record.total_for - current_result['away_score'] + update.away_score
+                    away_record.total_for = away_record.total_for - current_result['away_score'] + update.away_score
+                    home_record.home_against = home_record.total_against - current_result['away_score'] + update.away_score
+                    home_record.total_against = home_record.total_against - current_result['away_score'] + update.away_score
+                    away_record.away_against = away_record.total_against - current_result['home_score'] + update.home_score
+                    away_record.total_against = away_record.total_against - current_result['home_score'] + update.home_score
+                
+                    home_record.table_tiebreaker = home_record.total_for - home_record.total_against
+                    away_record.table_tiebreaker = away_record.total_for - away_record.total_against
+                    
+                    home_record.save()
+                    away_record.save()
             
             update.save()
             

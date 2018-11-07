@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.template.defaultfilters import slugify
-from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, GameOverviewForm, HomeStatsForm, AwayStatsForm, ClubForm, ClubSeasonForm, TableDetailsForm, HomeForm, AwayForm, PlayerForm
+from .forms import LoginForm, NewCompetitionForm, EditCompetitionForm, SiteSetupForm, SiteColorForm, NewEditionForm, EditEditionForm, GameForm, ClubForm, ClubSeasonForm, TableDetailsForm, HomeForm, AwayForm, PlayerForm
 
 
 # Create your views here.
@@ -484,25 +484,57 @@ def new_game(request):
     user = request.user
 
     if request.method == 'POST':
-        overview_form = GameOverviewForm(request.POST, request.FILES)
-        if overview_form.is_valid():
-            overview_form.save()
+        form = GameForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
             messages.success(request, 'Game has been created.')
             return redirect(reverse('cms_home'))
         else:
             messages.error(request, 'Sorry, we were unable to create the game. Please try again.')
 
     else:
-        overview_form = GameOverviewForm()
+        form = GameForm()
 
     args = {
         'user': user,
-        'overview_form': overview_form,
+        'form': form,
         'button_text': 'Create Game'
     }
     
     args.update(csrf(request))
     return render(request, 'new_game.html', args)
+    
+
+# Edit an existing game.
+@login_required(login_url='/login/')
+def game_details(request, game_id):
+    game = get_object_or_404(Game, pk=game_id)
+    
+    user = request.user
+
+    if request.method == 'POST':
+        form = GameForm(request.POST, request.FILES, instance=game)
+        if form.is_valid():
+            update = form.save(False)
+            update.date_modified = timezone.now()
+            update.save()
+            messages.success(request, 'Game has been edited.')
+            return redirect(reverse('cms_home'))
+        else:
+            messages.error(request, 'Sorry, we were unable to edit the game. Please try again.')
+
+    else:
+        form = GameForm(instance=game)
+
+    args = {
+        'game': game,
+        'user': user,
+        'form': form,
+        'button_text': 'Edit Details'
+    }
+    
+    args.update(csrf(request))
+    return render(request, 'game_details.html', args)
     
 
 # Show a complete, paginated list of games.
@@ -530,43 +562,3 @@ def game_list(request):
         games = page_games.page(1)
     
     return render(request, 'game_list.html', {'games': games, 'current_page': current_page, 'total_pages': total_pages})
-    
-
-# Edit an existing game.
-@login_required(login_url='/login/')
-def game_details(request, game_id):
-    game = get_object_or_404(Game, pk=game_id)
-    
-    user = request.user
-
-    if request.method == 'POST':
-        overview_form = GameOverviewForm(request.POST, request.FILES, instance=game)
-        home_form = HomeStatsForm(request.POST, request.FILES, instance=game)
-        away_form = AwayStatsForm(request.POST, request.FILES, instance=game)
-        if overview_form.is_valid() and home_form.is_valid() and away_form.is_valid():
-            update = overview_form.save(False)
-            update.date_modified = timezone.now()
-            overview_form.save()
-            home_form.save()
-            away_form.save()
-            messages.success(request, 'Game has been edited.')
-            return redirect(reverse('cms_home'))
-        else:
-            messages.error(request, 'Sorry, we were unable to edit the game. Please try again.')
-
-    else:
-        overview_form = GameOverviewForm(instance=game)
-        home_form = HomeStatsForm(instance=game)
-        away_form = AwayStatsForm(instance=game)
-
-    args = {
-        'game': game,
-        'user': user,
-        'overview_form': overview_form,
-        'home_form': home_form,
-        'away_form': away_form,
-        'button_text': 'Edit Details'
-    }
-    
-    args.update(csrf(request))
-    return render(request, 'game_details.html', args)

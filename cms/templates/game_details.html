@@ -27,7 +27,12 @@
         <div class="cms-details">
             
             <div class="format-details">
-                {{ overview_form.as_ul }}
+                {{ form.edition.label_tag }} {{ form.edition }}
+                {{ form.game_date.label_tag }} {{ form.game_date }}
+                {{ form.game_time.label_tag }} {{ form.game_time }}
+                {{ form.game_status.label_tag }} {{ form.game_status }}
+                {{ form.home_team.label_tag }} {{ form.home_team }}
+                {{ form.away_team.label_tag }} {{ form.away_team }}
             </div>
             
         </div>
@@ -39,7 +44,14 @@
         <div class="cms-details">
             
             <div class="format-details">
-                {{ home_form.as_ul }}
+                {{ form.home_score.label_tag }} {{ form.home_score }}
+                {{ form.home_possession.label_tag }} {{ form.home_possession }}
+                {{ form.home_shots.label_tag }} {{ form.home_shots }}
+                {{ form.home_on_target.label_tag }} {{ form.home_on_target }}
+                {{ form.home_corners.label_tag }} {{ form.home_corners }}
+                {{ form.home_fouls.label_tag }} {{ form.home_fouls }}
+                {{ form.home_yellow.label_tag }} {{ form.home_yellow }}
+                {{ form.home_red.label_tag }} {{ form.home_red }}
             </div>
             
         </div>
@@ -51,7 +63,14 @@
         <div class="cms-details">
             
             <div class="format-details">
-                {{ away_form.as_ul }}
+                {{ form.away_score.label_tag }} {{ form.away_score }}
+                {{ form.away_possession.label_tag }} {{ form.away_possession }}
+                {{ form.away_shots.label_tag }} {{ form.away_shots }}
+                {{ form.away_on_target.label_tag }} {{ form.away_on_target }}
+                {{ form.away_corners.label_tag }} {{ form.away_corners }}
+                {{ form.away_fouls.label_tag }} {{ form.away_fouls }}
+                {{ form.away_yellow.label_tag }} {{ form.away_yellow }}
+                {{ form.away_red.label_tag }} {{ form.away_red }}
             </div>
             
         </div>

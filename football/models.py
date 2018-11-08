@@ -31,6 +31,13 @@ TIE_BREAKERS = (
     ('Name', "Name"),
 )
 
+# Options for the result of a game.
+RESULT_CHOICES = (
+    ('H', "Home Win"),
+    ('A', "Away Win"),
+    ('D', "Draw"),
+)
+
 # Create your models here.
 class Club(models.Model):
     objects = models.Manager()
@@ -166,6 +173,7 @@ class Game(models.Model):
     away_team = models.ForeignKey(Club, related_name='game_away', on_delete=models.CASCADE)
     home_score = models.PositiveIntegerField(blank=True, null=True)
     away_score = models.PositiveIntegerField(blank=True, null=True)
+    result = models.CharField(max_length=1, choices=RESULT_CHOICES, blank=True, null=True)
     attendance = models.PositiveIntegerField(blank=True, null=True)
     date_modified = models.DateTimeField(default=now)
     # Statistics fields.

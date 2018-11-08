@@ -91,13 +91,14 @@ class Edition(models.Model):
     teams = models.ManyToManyField(Club, related_name='edition', blank=True)
     season = models.ForeignKey(Season, related_name='editions', on_delete=models.CASCADE, unique=True)
     is_current = models.BooleanField(default=True)
-	# Set up the league's points system.
+	# Set up the league's points system and other rules.
     home_win_points = models.IntegerField(default=3)
     away_win_points = models.IntegerField(default=3)
     home_draw_points = models.IntegerField(default=1)
     away_draw_points = models.IntegerField(default=1)
     home_loss_points = models.IntegerField(default=0)
     away_loss_points = models.IntegerField(default=0)
+    named_substitutes = models.IntegerField(default=5)
 	# Tie breakers default to 'Name' to ensure alphabetical sorting once all other criteria have been applied.
     tie_breaker_1 = models.CharField(max_length=25, choices=TIE_BREAKERS, default="Name")
     tie_breaker_2 = models.CharField(max_length=25, choices=TIE_BREAKERS, default="Name")
@@ -109,7 +110,7 @@ class Edition(models.Model):
     top_secondary_places = models.PositiveIntegerField(default=0)
     bottom_primary_places = models.PositiveIntegerField(default=0)
     bottom_secondary_places = models.PositiveIntegerField(default=0)
-	# Places to indicate promotion and relegation issues etc.
+	# Text field for explanatory notes.
     note = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -194,3 +195,36 @@ class Game(models.Model):
 
     def __str__(self):
         return self.home_team.full_name + " v " + self.away_team.full_name + ": " + str(self.game_date)
+
+
+# Team line-up model for individual games.
+class LineUp(models.Model):
+    objects = models.Manager()
+    game = models.ForeignKey(Game, related_name='lineups', on_delete=models.CASCADE)
+    club = models.ForeignKey(Club, related_name='lineup', on_delete=models.CASCADE)
+    starter_1 = models.ForeignKey(Player, related_name='starter1name', on_delete=models.CASCADE)
+    starter_2 = models.ForeignKey(Player, related_name='starter2name', on_delete=models.CASCADE)
+    starter_3 = models.ForeignKey(Player, related_name='starter3name', on_delete=models.CASCADE)
+    starter_4 = models.ForeignKey(Player, related_name='starter4name', on_delete=models.CASCADE)
+    starter_5 = models.ForeignKey(Player, related_name='starter5name', on_delete=models.CASCADE)
+    starter_6 = models.ForeignKey(Player, related_name='starter6name', on_delete=models.CASCADE)
+    starter_7 = models.ForeignKey(Player, related_name='starter7name', on_delete=models.CASCADE)
+    starter_8 = models.ForeignKey(Player, related_name='starter8name', on_delete=models.CASCADE)
+    starter_9 = models.ForeignKey(Player, related_name='starter9name', on_delete=models.CASCADE)
+    starter_10 = models.ForeignKey(Player, related_name='starter10name', on_delete=models.CASCADE)
+    starter_11 = models.ForeignKey(Player, related_name='starter11name', on_delete=models.CASCADE)
+    substitute_1 = models.ForeignKey(Player, related_name='sub1name', on_delete=models.CASCADE)
+    substitute_2 = models.ForeignKey(Player, related_name='sub2name', on_delete=models.CASCADE)
+    substitute_3 = models.ForeignKey(Player, related_name='sub3name', on_delete=models.CASCADE)
+    substitute_4 = models.ForeignKey(Player, related_name='sub4name', on_delete=models.CASCADE)
+    substitute_5 = models.ForeignKey(Player, related_name='sub5name', on_delete=models.CASCADE)
+    substitute_6 = models.ForeignKey(Player, related_name='sub6name', on_delete=models.CASCADE)
+    substitute_7 = models.ForeignKey(Player, related_name='sub7name', on_delete=models.CASCADE)
+    substitute_8 = models.ForeignKey(Player, related_name='sub8name', on_delete=models.CASCADE)
+    substitute_9 = models.ForeignKey(Player, related_name='sub9name', on_delete=models.CASCADE)
+    substitute_10 = models.ForeignKey(Player, related_name='sub10name', on_delete=models.CASCADE)
+    substitute_11 = models.ForeignKey(Player, related_name='sub11name', on_delete=models.CASCADE)
+    substitute_12 = models.ForeignKey(Player, related_name='sub12name', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.club.full_name + ": " + self.game.game_date
